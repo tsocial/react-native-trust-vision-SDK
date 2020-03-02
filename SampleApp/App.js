@@ -25,7 +25,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import RNTrustVisionRnsdkFramework from 'react-native-trust-vision-rnsdk-framework';
+import RNTrustVisionRnsdkFramework from 'react-native-trust-vision-SDK';
 
 const App: () => React$Node = () => {
   const onPress = async () => {
