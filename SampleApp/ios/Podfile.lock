@@ -219,10 +219,10 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - RNTrustVisionRnsdkFramework (1.0.0):
     - React
-    - TrustVisionSDKFramework (~> 1.0.2)
-  - TrustVisionAPIFramework (1.0.2)
-  - TrustVisionSDKFramework (1.0.2):
-    - TrustVisionAPIFramework (~> 1.0.2)
+    - TrustVisionSDKFramework (~> 1.0.4)
+  - TrustVisionAPIFramework (1.0.4)
+  - TrustVisionSDKFramework (1.0.4):
+    - TrustVisionAPIFramework (~> 1.0.4)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -253,7 +253,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - RNTrustVisionRnsdkFramework (from `../../`)
+  - RNTrustVisionRnsdkFramework (from `../node_modules/react-native-trust-vision-SDK`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -313,7 +313,7 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
   RNTrustVisionRnsdkFramework:
-    :path: "../../"
+    :path: "../node_modules/react-native-trust-vision-SDK"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -343,11 +343,11 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNTrustVisionRnsdkFramework: afdccfc9c9e9bbcf6a84a18f6cb226ecf2606309
-  TrustVisionAPIFramework: 11d2768b9bb4826e12b6a1d74889ac5563dda6e2
-  TrustVisionSDKFramework: c6e4eed5cfa727e55926facbe6b2907b9c4a0113
+  RNTrustVisionRnsdkFramework: 8de32f5c012762bab20e49e0ae96a14bb1a09604
+  TrustVisionAPIFramework: 1c3f861f2ff800ddfa0b8a07b1bbca6b08c836aa
+  TrustVisionSDKFramework: 84c6816dae8bb9a7c382d5f6a968acf50740fce6
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 6f6a0a7da6aca6739e0d60854879841ec3355457
+PODFILE CHECKSUM: a9be7dcad134b8d859ae699d93f3373c5cb4d1a4
 
 COCOAPODS: 1.6.1

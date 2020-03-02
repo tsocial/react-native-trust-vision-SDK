@@ -5227,9 +5227,9 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-"react-native-trust-vision-rnsdk-framework@git+https://github.com/tsocial/TrustVisionRNSDKFramework.git#release":
+"react-native-trust-vision-SDK@git+https://github.com/tsocial/react-native-trust-vision-SDK":
   version "1.0.0"
-  resolved "git+https://github.com/tsocial/TrustVisionRNSDKFramework.git#93128fe0a1405af880a91ea71b0f630081b073a9"
+  resolved "git+https://github.com/tsocial/react-native-trust-vision-SDK#4e486fbbebc9a24c40408e45345f5c579c48941d"
 
 react-native@0.61.5:
   version "0.61.5"
