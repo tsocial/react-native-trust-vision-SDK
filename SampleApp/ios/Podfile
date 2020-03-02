@@ -36,7 +36,7 @@ target 'SampleApp' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   
-  pod 'RNTrustVisionRnsdkFramework', path: '../../'
+  pod 'RNTrustVisionRnsdkFramework', path: '../node_modules/react-native-trust-vision-rnsdk-framework'
 
   target 'SampleAppTests' do
     inherit! :search_paths

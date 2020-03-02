@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-trust-vision-rnsdk-framework": "file:.."
+    "react-native-trust-vision-rnsdk-framework": "git+https://github.com/tsocial/TrustVisionRNSDKFramework.git#release"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
