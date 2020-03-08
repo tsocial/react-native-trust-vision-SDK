@@ -30,11 +30,7 @@ RCT_EXPORT_METHOD(initializeWithAcessKeyId:(NSString *)accessKeyId
 RCT_EXPORT_METHOD(getCardTypes:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
-    NSError *error;
-    NSArray<TVCardType *> *cardTypes = [TrustVisionSdk getCardTypesAndReturnError: &error];
-    if (error) {
-        reject(@([error code]).stringValue, [error localizedDescription], error);
-    }
+    NSArray<TVCardType *> *cardTypes = [TrustVisionSdk getCardTypes];
     NSMutableArray<NSDictionary *> *cardTypeDicts = [[NSMutableArray alloc] init];
     for (TVCardType *cardType in cardTypes) {
         NSDictionary *cardTypeDict = [cardType toDictionary];
@@ -100,9 +96,7 @@ RCT_EXPORT_METHOD(startFlowWithConfig:(NSDictionary *)configDict
     TVSDKConfig *config = [TVSDKConfig dictToObjWithDict: configDict];
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSError *error;
         UIViewController *mainVc = [TrustVisionSdk newCameraViewControllerWithConfig:config
-                                                                               error:&error
                                                                             callback:^(TVDetectionResult *result, TVError *error) {
                                                                                 if (error) {
                                                                                     [self rejectWithRejecter:reject TvError: error];
@@ -110,13 +104,6 @@ RCT_EXPORT_METHOD(startFlowWithConfig:(NSDictionary *)configDict
                                                                                     resolve([result toDictionary]);
                                                                                 }
                                                                             }];
-        
-        if (error != nil) {
-            NSString *codeString = [NSString stringWithFormat:@"%ld",(long)[error code]];
-            reject(codeString, [error localizedDescription], error);
-            return;
-        }
-        
         [self presentViewController:mainVc];
     });
 }
