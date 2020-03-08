@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-trust-vision-SDK": "git+https://github.com/tsocial/react-native-trust-vision-SDK"
+    "react-native-trust-vision-SDK": "../"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",

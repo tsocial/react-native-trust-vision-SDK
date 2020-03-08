@@ -25,7 +25,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import RNTrustVisionRnsdkFramework from 'react-native-trust-vision-SDK';
+import RNTrustVisionRnsdkFramework, {TVConst, TVErrorCode} from 'react-native-trust-vision-SDK';
 
 const App: () => React$Node = () => {
   const onPress = async () => {
@@ -37,16 +37,27 @@ const App: () => React$Node = () => {
       );
       const cardTypes = await RNTrustVisionRnsdkFramework.getCardTypes();
       const config = {
-        actionMode: 'extractIdInfo',
+        actionMode: TVConst.TVActionMode.LIVENESS,
         cardType: cardTypes[0],
-        livenessMode: 'passive',
+        livenessMode: TVConst.TVLivenessMode.PASSIVE,
       };
-      const aa = await RNTrustVisionRnsdkFramework.startFlowWithConfig(config);
-      console.log('VKN', aa);
-
-      const a = true;
+      console.log('Config', config);
+      const result = await RNTrustVisionRnsdkFramework.startFlowWithConfig(config);
+      console.log('Result', result);
     } catch (e) {
-      console.log('error', e);
+      switch (e.code) {
+        // local error
+        case TVErrorCode.UNAUTHORIZED:
+        case TVErrorCode.NETWORK_ERROR:
+        case TVErrorCode.INTERNAL_ERROR:
+        case TVErrorCode.TIMEOUT_ERROR:
+            console.log('Error: ', e.code, ' - ', e.message);
+            break;
+        default:
+          // error from backend
+          console.log('Error: ', e.code, ' - ', e.message);
+          break;
+      }
     }
   };
 
