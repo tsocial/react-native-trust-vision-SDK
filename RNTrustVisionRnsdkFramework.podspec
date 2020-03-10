@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
 
 
   s.dependency "React"
-  s.dependency 'TrustVisionSDKFramework', '~> 1.0.4'
+  s.dependency 'TrustVisionSDKFramework', '~> 1.0.5'
 
 end
