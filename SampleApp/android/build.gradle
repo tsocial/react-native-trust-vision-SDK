@@ -3,7 +3,7 @@
 buildscript {
     ext {
         buildToolsVersion = "28.0.3"
-        minSdkVersion = 21
+        minSdkVersion = 19
         compileSdkVersion = 28
         targetSdkVersion = 28
     }
@@ -32,7 +32,7 @@ allprojects {
         }
 
         maven {
-             url("$rootDir/../node_modules/react-native-trust-vision-rnsdk-framework/android/repo")
+             url("$rootDir/../node_modules/react-native-trust-vision-SDK/android/repo")
         }
 
         google()

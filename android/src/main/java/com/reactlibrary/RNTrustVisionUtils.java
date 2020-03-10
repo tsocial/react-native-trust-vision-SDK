@@ -1,6 +1,8 @@
 package com.reactlibrary;
 
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
@@ -15,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +83,7 @@ class RNTrustVisionUtils {
         return array;
     }
 
+
     static TVSDKConfiguration convertConfigFromMap(ReadableMap map) {
         TVSDKConfiguration.Builder configuration = new TVSDKConfiguration.Builder();
 
@@ -88,16 +92,19 @@ class RNTrustVisionUtils {
         }
 
         if (map.hasKey("livenessMode")) {
-            configuration.setLivenessMode(TVLivenessMode.values()[map.getInt("livenessMode")]);
+            TVLivenessMode livenessMode = TVLivenessMode.valueOf(map.getString("livenessMode").toUpperCase());
+            configuration.setLivenessMode(livenessMode);
         }
 
         if (map.hasKey("actionMode")) {
-            configuration.setActionMode(TVActionMode.values()[map.getInt("actionMode")]);
+            TVActionMode actionMode = TVActionMode.valueOf(map.getString("actionMode").toUpperCase());
+            configuration.setActionMode(actionMode);
         }
 
         if (map.hasKey("cardType")) {
-            String json = map.getString("cardType");
-            configuration.setCardType(GsonUtils.fromJson(json, TVCardType.class));
+            String cardMap = map.getString("cardType");
+//            String json = GsonUtils.toJson(cardMap.toHashMap());
+            configuration.setCardType(GsonUtils.fromJson(cardMap, TVCardType.class));
         }
 
         if (map.hasKey("cameraOption")) {
