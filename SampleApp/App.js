@@ -25,7 +25,10 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import RNTrustVisionRnsdkFramework, {TVConst, TVErrorCode} from 'react-native-trust-vision-SDK';
+import RNTrustVisionRnsdkFramework, {
+  TVConst,
+  TVErrorCode,
+} from 'react-native-trust-vision-SDK';
 
 const App: () => React$Node = () => {
   const onPress = async () => {
@@ -37,12 +40,16 @@ const App: () => React$Node = () => {
       );
       const cardTypes = await RNTrustVisionRnsdkFramework.getCardTypes();
       const config = {
-        actionMode: TVConst.TVActionMode.LIVENESS,
+        actionMode: TVConst.TVActionMode.FULL,
         cardType: cardTypes[0],
         livenessMode: TVConst.TVLivenessMode.PASSIVE,
+        isEnableIDSanityCheck: true,
+        isEnableSelfieSanityCheck: false,
       };
       console.log('Config', config);
-      const result = await RNTrustVisionRnsdkFramework.startFlowWithConfig(config);
+      const result = await RNTrustVisionRnsdkFramework.startFlowWithConfig(
+        config,
+      );
       console.log('Result', result);
     } catch (e) {
       switch (e.code) {
@@ -51,8 +58,8 @@ const App: () => React$Node = () => {
         case TVErrorCode.NETWORK_ERROR:
         case TVErrorCode.INTERNAL_ERROR:
         case TVErrorCode.TIMEOUT_ERROR:
-            console.log('Error: ', e.code, ' - ', e.message);
-            break;
+          console.log('Error: ', e.code, ' - ', e.message);
+          break;
         default:
           // error from backend
           console.log('Error: ', e.code, ' - ', e.message);
