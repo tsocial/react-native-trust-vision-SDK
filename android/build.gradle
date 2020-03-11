@@ -20,7 +20,7 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation('com.trustvision:tv_sdk:1.0.0@aar') {
+    implementation('com.trustvision:tv_sdk:1.0.20@aar') {
         transitive = true
     }
 }
