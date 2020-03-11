@@ -105,7 +105,21 @@ class RNTrustVisionUtils {
         }
 
         if (map.hasKey("actionMode")) {
-            TVActionMode actionMode = TVActionMode.valueOf(map.getString("actionMode").toUpperCase());
+            TVActionMode actionMode;
+            switch (map.getString("actionMode")) {
+                case "FACE_MATCHING":
+                    actionMode = TVActionMode.FACE_MATCHING;
+                    break;
+                case "LIVENESS":
+                    actionMode = TVActionMode.LIVENESS;
+                    break;
+                case "READ_CARD_INFO":
+                    actionMode = TVActionMode.READ_CARD_INFO_TWO_SIDE;
+                    break;
+                default:
+                    actionMode = TVActionMode.FULL;
+
+            }
             configuration.setActionMode(actionMode);
         }
 
