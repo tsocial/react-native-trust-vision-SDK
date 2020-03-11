@@ -112,8 +112,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    //convert to map
-                    promise.resolve(tvDetectionResult);
+                    try {
+                        promise.resolve(RNTrustVisionUtils.objectToMap(tvDetectionResult));
+                    } catch (Exception e) {
+                        promise.reject(INTERNAL_ERROR, "Parse result error");
+                    }
                 }
             });
         } catch (Exception ex) {
@@ -134,9 +137,9 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
                     try {
-                        promise.resolve(RNTrustVisionUtils.convertJsonToMap(new JSONObject(GsonUtils.toJson(tvDetectionResult))));
-                    } catch (JSONException e) {
-                        promise.reject(INTERNAL_ERROR, "parse result error");
+                        promise.resolve(RNTrustVisionUtils.objectToMap(tvDetectionResult));
+                    } catch (Exception e) {
+                        promise.reject(INTERNAL_ERROR, "Parse result error");
                     }
                 }
             });
@@ -157,7 +160,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    promise.resolve(tvDetectionResult);
+                    try {
+                        promise.resolve(RNTrustVisionUtils.objectToMap(tvDetectionResult));
+                    } catch (Exception e) {
+                        promise.reject(INTERNAL_ERROR, "Parse result error");
+                    }
                 }
             });
         } catch (Exception ex) {

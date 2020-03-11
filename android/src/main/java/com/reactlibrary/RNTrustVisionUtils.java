@@ -64,14 +64,8 @@ class RNTrustVisionUtils {
         return map;
     }
 
-    static WritableMap objectToMap(Object object) {
-        WritableMap map = new WritableNativeMap();
-        try {
-            return convertJsonToMap(new JSONObject(GsonUtils.toJson(object)));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return map;
-        }
+    static WritableMap objectToMap(Object object) throws JSONException {
+        return convertJsonToMap(new JSONObject(GsonUtils.toJson(object)));
     }
 
     static WritableArray convertJsonToArray(JSONArray jsonArray) throws JSONException {
