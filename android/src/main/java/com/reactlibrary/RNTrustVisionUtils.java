@@ -116,8 +116,8 @@ class RNTrustVisionUtils {
         }
 
         if (map.hasKey("cardType")) {
-            String json = map.getString("cardType");
-            configuration.setCardType(GsonUtils.fromJson(json, TVCardType.class));
+            ReadableMap cardMap = map.getMap("cardType");
+            configuration.setCardType(readCardType(cardMap));
         }
 
         if (map.hasKey("cameraOption")) {
@@ -143,14 +143,23 @@ class RNTrustVisionUtils {
         }
 
         if (map.hasKey("cardType")) {
-            String json = map.getString("cardType");
-            configuration.setCardType(GsonUtils.fromJson(json, TVCardType.class));
+            ReadableMap cardMap = map.getMap("cardType");
+            configuration.setCardType(readCardType(cardMap));
         }
 
         if (map.hasKey("isEnableSanityCheck")) {
             configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
         }
         return configuration.build();
+    }
+
+    private static TVCardType readCardType(ReadableMap readableMap) {
+        String cardId = readableMap.getString("cardId");
+        String cardName = readableMap.getString("cardName");
+        String orientation = readableMap.getString("orientation");
+        boolean isRequireBackSide = readableMap.getBoolean("requireBackside");
+        return new TVCardType(cardId, cardName, isRequireBackSide, TVCardType.TVCardOrientation.valueOf(orientation));
+
     }
 
     static TVSelfieConfiguration convertSelfieConfigFromMap(ReadableMap map) {

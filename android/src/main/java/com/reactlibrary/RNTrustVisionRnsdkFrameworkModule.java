@@ -32,6 +32,7 @@ import org.json.JSONException;
 import java.util.List;
 
 public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModule {
+    private static String INTERNAL_ERROR = "internal_error";
 
     private final ReactApplicationContext reactContext;
 
@@ -93,7 +94,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
             promise.resolve(array);
         } catch (JSONException e) {
             e.printStackTrace();
-            promise.reject("error", "parse array error");
+            promise.reject(INTERNAL_ERROR, "get cardTypes error");
         }
     }
 
@@ -114,7 +115,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -134,7 +135,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -154,7 +155,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -174,7 +175,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -194,7 +195,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -215,7 +216,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -224,7 +225,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         try {
             promise.resolve(TrustVisionSDK.getLivenessOptions());
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -244,7 +245,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
