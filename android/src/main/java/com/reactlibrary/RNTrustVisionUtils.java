@@ -158,6 +158,10 @@ class RNTrustVisionUtils {
         if (map.hasKey("isEnableSanityCheck")) {
             configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
         }
+
+        if (map.hasKey("isReadBothSide")) {
+            configuration.setReadBothSide(map.getBoolean("isReadBothSide"));
+        }
         return configuration.build();
     }
 
