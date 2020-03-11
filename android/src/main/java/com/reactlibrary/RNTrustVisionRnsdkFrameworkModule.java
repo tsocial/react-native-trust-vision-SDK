@@ -16,6 +16,7 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.trustingsocial.apisdk.TVApi;
 import com.trustingsocial.apisdk.data.TVApiError;
 import com.trustingsocial.apisdk.data.TVCallback;
+import com.trustingsocial.apisdk.utils.GsonUtils;
 import com.trustingsocial.tvsdk.TVCapturingCallBack;
 import com.trustingsocial.tvsdk.TVDetectionError;
 import com.trustingsocial.tvsdk.TVDetectionResult;
@@ -28,6 +29,7 @@ import com.trustingsocial.tvsdk.internal.TVCardType;
 import com.trustingsocial.tvsdk.internal.TrustVisionSDK;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -111,7 +113,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
                     //convert to map
-                    promise.resolve(RNTrustVisionUtils.convertResult(tvDetectionResult));
+                    promise.resolve(tvDetectionResult);
                 }
             });
         } catch (Exception ex) {
@@ -131,7 +133,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    promise.resolve(RNTrustVisionUtils.convertResult(tvDetectionResult));
+                    try {
+                        promise.resolve(RNTrustVisionUtils.convertJsonToMap(new JSONObject(GsonUtils.toJson(tvDetectionResult))));
+                    } catch (JSONException e) {
+                        promise.reject(INTERNAL_ERROR, "parse result error");
+                    }
                 }
             });
         } catch (Exception ex) {
@@ -151,7 +157,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    promise.resolve(RNTrustVisionUtils.convertResult(tvDetectionResult));
+                    promise.resolve(tvDetectionResult);
                 }
             });
         } catch (Exception ex) {
@@ -170,7 +176,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    promise.resolve(RNTrustVisionUtils.convertResult(tvDetectionResult));
+                    promise.resolve(tvDetectionResult);
 
                 }
             });
