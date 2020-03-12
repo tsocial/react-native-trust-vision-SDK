@@ -16,6 +16,7 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.trustingsocial.apisdk.TVApi;
 import com.trustingsocial.apisdk.data.TVApiError;
 import com.trustingsocial.apisdk.data.TVCallback;
+import com.trustingsocial.apisdk.utils.GsonUtils;
 import com.trustingsocial.tvsdk.TVCapturingCallBack;
 import com.trustingsocial.tvsdk.TVDetectionError;
 import com.trustingsocial.tvsdk.TVDetectionResult;
@@ -28,10 +29,12 @@ import com.trustingsocial.tvsdk.internal.TVCardType;
 import com.trustingsocial.tvsdk.internal.TrustVisionSDK;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModule {
+    private static String INTERNAL_ERROR = "internal_error";
 
     private final ReactApplicationContext reactContext;
 
@@ -93,7 +96,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
             promise.resolve(array);
         } catch (JSONException e) {
             e.printStackTrace();
-            promise.reject("error", "parse array error");
+            promise.reject(INTERNAL_ERROR, "get cardTypes error");
         }
     }
 
@@ -109,12 +112,15 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    //convert to map
-                    promise.resolve(RNTrustVisionUtils.convertResult(tvDetectionResult));
+                    try {
+                        promise.resolve(RNTrustVisionUtils.objectToMap(tvDetectionResult));
+                    } catch (Exception e) {
+                        promise.reject(INTERNAL_ERROR, "Parse result error");
+                    }
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -130,11 +136,15 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    promise.resolve(RNTrustVisionUtils.convertResult(tvDetectionResult));
+                    try {
+                        promise.resolve(RNTrustVisionUtils.objectToMap(tvDetectionResult));
+                    } catch (Exception e) {
+                        promise.reject(INTERNAL_ERROR, "Parse result error");
+                    }
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -150,11 +160,15 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    promise.resolve(RNTrustVisionUtils.convertResult(tvDetectionResult));
+                    try {
+                        promise.resolve(RNTrustVisionUtils.objectToMap(tvDetectionResult));
+                    } catch (Exception e) {
+                        promise.reject(INTERNAL_ERROR, "Parse result error");
+                    }
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -169,12 +183,12 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
                 @Override
                 public void onSuccess(TVDetectionResult tvDetectionResult) {
-                    promise.resolve(RNTrustVisionUtils.convertResult(tvDetectionResult));
+                    promise.resolve(tvDetectionResult);
 
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -194,7 +208,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -215,7 +229,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -224,7 +238,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         try {
             promise.resolve(TrustVisionSDK.getLivenessOptions());
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 
@@ -244,7 +258,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
             });
         } catch (Exception ex) {
-            promise.reject(ex);
+            promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
     }
 

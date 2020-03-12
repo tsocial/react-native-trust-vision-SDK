@@ -64,14 +64,8 @@ class RNTrustVisionUtils {
         return map;
     }
 
-    static WritableMap objectToMap(Object object) {
-        WritableMap map = new WritableNativeMap();
-        try {
-            return convertJsonToMap(new JSONObject(GsonUtils.toJson(object)));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return map;
-        }
+    static WritableMap objectToMap(Object object) throws JSONException {
+        return convertJsonToMap(new JSONObject(GsonUtils.toJson(object)));
     }
 
     static WritableArray convertJsonToArray(JSONArray jsonArray) throws JSONException {
@@ -111,13 +105,27 @@ class RNTrustVisionUtils {
         }
 
         if (map.hasKey("actionMode")) {
-            TVActionMode actionMode = TVActionMode.valueOf(map.getString("actionMode").toUpperCase());
+            TVActionMode actionMode;
+            switch (map.getString("actionMode")) {
+                case "FACE_MATCHING":
+                    actionMode = TVActionMode.FACE_MATCHING;
+                    break;
+                case "LIVENESS":
+                    actionMode = TVActionMode.LIVENESS;
+                    break;
+                case "READ_CARD_INFO":
+                    actionMode = TVActionMode.READ_CARD_INFO_TWO_SIDE;
+                    break;
+                default:
+                    actionMode = TVActionMode.FULL;
+
+            }
             configuration.setActionMode(actionMode);
         }
 
         if (map.hasKey("cardType")) {
-            String json = map.getString("cardType");
-            configuration.setCardType(GsonUtils.fromJson(json, TVCardType.class));
+            ReadableMap cardMap = map.getMap("cardType");
+            configuration.setCardType(readCardType(cardMap));
         }
 
         if (map.hasKey("cameraOption")) {
@@ -143,14 +151,27 @@ class RNTrustVisionUtils {
         }
 
         if (map.hasKey("cardType")) {
-            String json = map.getString("cardType");
-            configuration.setCardType(GsonUtils.fromJson(json, TVCardType.class));
+            ReadableMap cardMap = map.getMap("cardType");
+            configuration.setCardType(readCardType(cardMap));
         }
 
         if (map.hasKey("isEnableSanityCheck")) {
             configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
         }
+
+        if (map.hasKey("isReadBothSide")) {
+            configuration.setReadBothSide(map.getBoolean("isReadBothSide"));
+        }
         return configuration.build();
+    }
+
+    private static TVCardType readCardType(ReadableMap readableMap) {
+        String cardId = readableMap.getString("cardId");
+        String cardName = readableMap.getString("cardName");
+        String orientation = readableMap.getString("orientation");
+        boolean isRequireBackSide = readableMap.getBoolean("requireBackside");
+        return new TVCardType(cardId, cardName, isRequireBackSide, TVCardType.TVCardOrientation.valueOf(orientation));
+
     }
 
     static TVSelfieConfiguration convertSelfieConfigFromMap(ReadableMap map) {
@@ -194,73 +215,5 @@ class RNTrustVisionUtils {
 
         }
         return GsonUtils.toJson(new TVApiError(errorCode, resultError.getErrorDescription()));
-    }
-
-    static Map<String, Object> convertResult(TVDetectionResult tvDetectionResult) {
-        Map<String, Object> result = new HashMap<>();
-
-        if (tvDetectionResult == null) return result;
-
-        if (tvDetectionResult.getCardType() != null) {
-            result.put("cardType", tvDetectionResult.getCardType());
-        }
-
-        if (tvDetectionResult.getActionMode() != null) {
-            result.put("actionMode", tvDetectionResult.getActionMode().name());
-        }
-
-        if (tvDetectionResult.getFaceCompareResult() != null) {
-            result.put("compareFaceResult", tvDetectionResult.getFaceCompareResult());
-        }
-
-        if (tvDetectionResult.getCardInfoResult() != null) {
-            result.put("cardInfoResult", tvDetectionResult.getCardInfoResult());
-        }
-
-        if (tvDetectionResult.getLivenessResult() != null) {
-            result.put("livenessResult", tvDetectionResult.getLivenessResult());
-        }
-
-        if (tvDetectionResult.getIdSanityResult() != null) {
-            result.put("idSanityResult", tvDetectionResult.getIdSanityResult());
-        }
-
-        if (tvDetectionResult.getSelfieSanityResult() != null) {
-            result.put("selfieSanityResult", tvDetectionResult.getSelfieSanityResult());
-        }
-
-        if (!TextUtils.isEmpty(tvDetectionResult.getSelfieImageId())) {
-            result.put("selfieImageId", tvDetectionResult.getSelfieImageId());
-        }
-
-        if (!TextUtils.isEmpty(tvDetectionResult.getIdBackImageId())) {
-            result.put("idBackImageId", tvDetectionResult.getIdBackImageId());
-        }
-
-        if (!TextUtils.isEmpty(tvDetectionResult.getIdFrontImageId())) {
-            result.put("idFrontImageId", tvDetectionResult.getIdFrontImageId());
-        }
-
-        if (!TextUtils.isEmpty(tvDetectionResult.getCroppedCardFrontImageId())) {
-            result.put("croppedIdFrontImageId", tvDetectionResult.getCroppedCardFrontImageId());
-        }
-
-        if (!TextUtils.isEmpty(tvDetectionResult.getCroppedCardBackImageId())) {
-            result.put("croppedIdBackImageId", tvDetectionResult.getCroppedCardFrontImageId());
-        }
-
-        if (!TextUtils.isEmpty(tvDetectionResult.getSelfieImageUrl())) {
-            result.put("selfieImageUrl", tvDetectionResult.getSelfieImageUrl());
-        }
-
-        if (!TextUtils.isEmpty(tvDetectionResult.getIdBackImageUrl())) {
-            result.put("idBackImageUrl", tvDetectionResult.getIdBackImageId());
-        }
-
-        if (!TextUtils.isEmpty(tvDetectionResult.getIdFrontImageUrl())) {
-            result.put("idFrontImageUrl", tvDetectionResult.getIdFrontImageId());
-        }
-
-        return result;
     }
 }
