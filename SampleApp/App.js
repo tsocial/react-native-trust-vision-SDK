@@ -40,9 +40,9 @@ const App: () => React$Node = () => {
       );
       const cardTypes = await RNTrustVisionRnsdkFramework.getCardTypes();
       const config = {
-        actionMode: TVConst.TVActionMode.FULL,
+        actionMode: TVConst.ActionMode.FULL,
         cardType: cardTypes[0],
-        livenessMode: TVConst.TVLivenessMode.PASSIVE,
+        livenessMode: TVConst.LivenessMode.PASSIVE,
         isEnableIDSanityCheck: true,
         isEnableSelfieSanityCheck: false,
       };
