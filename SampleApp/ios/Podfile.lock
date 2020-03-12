@@ -217,15 +217,16 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNTrustVisionRnsdkFramework (1.0.0):
+  - RNTrustVisionRnsdkFramework (1.0.6):
     - React
-    - TrustVisionSDKFramework (~> 1.0.4)
-  - TrustVisionAPIFramework (1.0.4)
-  - TrustVisionSDKFramework (1.0.4):
-    - TrustVisionAPIFramework (~> 1.0.4)
+    - TrustVisionSDKFramework (~> 1.0.6)
+  - TrustVisionAPIFramework (1.0.6)
+  - TrustVisionSDKFramework (1.0.6):
+    - TrustVisionAPIFramework (~> 1.0.6)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - boost-for-react-native (from `https://raw.githubusercontent.com/react-native-community/boost-for-react-native/master/boost-for-react-native.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
@@ -257,13 +258,13 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - boost-for-react-native
   https://github.com/tsocial/TrustVisionPodspec:
     - TrustVisionAPIFramework
     - TrustVisionSDKFramework
 
 EXTERNAL SOURCES:
+  boost-for-react-native:
+    :podspec: https://raw.githubusercontent.com/react-native-community/boost-for-react-native/master/boost-for-react-native.podspec
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -343,11 +344,11 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNTrustVisionRnsdkFramework: 8de32f5c012762bab20e49e0ae96a14bb1a09604
-  TrustVisionAPIFramework: 1c3f861f2ff800ddfa0b8a07b1bbca6b08c836aa
-  TrustVisionSDKFramework: 84c6816dae8bb9a7c382d5f6a968acf50740fce6
+  RNTrustVisionRnsdkFramework: fd3f2aba1251098afc28366d6c24a070c4c46cc3
+  TrustVisionAPIFramework: 67e7b7ab07e3a240c8f6c175c35832e9f590ecbc
+  TrustVisionSDKFramework: f333953c1ac39b18fa9d6b10b27db3ee97931b37
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: dae1a386ee48e01063772742d79c6450099f887e
+PODFILE CHECKSUM: 5b076545c84fde7ffb5d8da15d694ac5161b1808
 
 COCOAPODS: 1.6.1
