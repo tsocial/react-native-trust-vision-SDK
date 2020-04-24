@@ -9,21 +9,22 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(initializeWithAcessKeyId:(NSString *)accessKeyId
+RCT_EXPORT_METHOD(initialize:(NSString *)accessKeyId
                   accessKeySecret:(NSString *)accessKeySecret
                   isForce:(BOOL) isForce
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
-    [TrustVisionSdk initializeWithAccessKeyId: accessKeyId
-                              accessKeySecret: accessKeySecret
-                                     isForced: isForce
-                                      success: ^() {
-                                          resolve(@"Initialize TV framework done.");
-                                      }
-                                      failure: ^(TVError *error) {
-                                        [self rejectWithRejecter:reject TvError: error];
-                                      }];
+    [TrustVisionSdk initializeWithAccessKeyId:accessKeyId
+                              accessKeySecret:(NSString * _Nonnull)accessKeySecret
+                            localizationFiles:NULL
+                                     isForced:isForce
+                                      success:^{
+        resolve(@"Initialize TV framework done.");
+    }
+                                      failure:^(TVError * error) {
+        [self rejectWithRejecter:reject TvError: error];
+    }];
 }
 
 // MARK: - Get settings
@@ -68,7 +69,7 @@ RCT_EXPORT_METHOD(getSelfieSanityCheckingEnable:(RCTPromiseResolveBlock)resolve
 }
 
 // MARK: - Flows
-RCT_EXPORT_METHOD(startTransactionWithReferenceId:(NSString *)referenceId
+RCT_EXPORT_METHOD(startTransaction:(NSString *)referenceId
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
@@ -89,7 +90,7 @@ RCT_EXPORT_METHOD(endTransactionWithResolver:(RCTPromiseResolveBlock)resolve
     }];
 }
 
-RCT_EXPORT_METHOD(startFlowWithConfig:(NSDictionary *)configDict
+RCT_EXPORT_METHOD(startFlow:(NSDictionary *)configDict
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
@@ -97,13 +98,16 @@ RCT_EXPORT_METHOD(startFlowWithConfig:(NSDictionary *)configDict
 
     dispatch_async(dispatch_get_main_queue(), ^{
         UIViewController *mainVc = [TrustVisionSdk newCameraViewControllerWithConfig:config
-                                                                            callback:^(TVDetectionResult *result, TVError *error) {
-                                                                                if (error) {
-                                                                                    [self rejectWithRejecter:reject TvError: error];
-                                                                                } else {
-                                                                                    resolve([result toDictionary]);
-                                                                                }
-                                                                            }];
+                                                                             success:^(TVDetectionResult * result) {
+            resolve([result toDictionary]);
+        }
+                                                                             failure:^(TVError * error) {
+            [self rejectWithRejecter:reject TvError: error];
+        }
+                                                                        cancellation:^{
+            [self rejectWithCancelationErrorWithRejecter:reject];
+        }];
+        
         [self presentViewController:mainVc];
     });
 }
@@ -116,10 +120,15 @@ RCT_EXPORT_METHOD(startIdCapturing:(NSDictionary *)configDict
 
     dispatch_async(dispatch_get_main_queue(), ^{
 
-        UIViewController *mainVc = [TrustVisionSdk startIdCapturingWithConfiguration:config success:^(TVDetectionResult * result) {
+        UIViewController *mainVc = [TrustVisionSdk startIdCapturingWithConfiguration:config
+                                                                             success:^(TVDetectionResult * result) {
             resolve([result toDictionary]);
-        } failure:^(TVError * error) {
+        }
+                                                                             failure:^(TVError * error) {
             [self rejectWithRejecter:reject TvError: error];
+        }
+                                                                        cancellation:^{
+            [self rejectWithCancelationErrorWithRejecter:reject];
         }];
         
         [self presentViewController:mainVc];
@@ -134,17 +143,22 @@ RCT_EXPORT_METHOD(startSelfieCapturing:(NSDictionary *)configDict
 
     dispatch_async(dispatch_get_main_queue(), ^{
 
-        UIViewController *mainVc = [TrustVisionSdk startSelfieCapturingWithConfiguration:config success:^(TVDetectionResult * result) {
+        UIViewController *mainVc = [TrustVisionSdk startSelfieCapturingWithConfiguration:config
+                                                                                 success:^(TVDetectionResult * result) {
             resolve([result toDictionary]);
-        } failure:^(TVError * error) {
+        }
+                                                                                 failure:^(TVError * error) {
             [self rejectWithRejecter:reject TvError: error];
+        }
+                                                                            cancellation:^{
+            [self rejectWithCancelationErrorWithRejecter:reject];
         }];
-        
+
         [self presentViewController:mainVc];
     });
 }
 
-RCT_EXPORT_METHOD(matchFaceWithImage1Id:(NSString *)image1Id
+RCT_EXPORT_METHOD(matchFace:(NSString *)image1Id
                   image2Id:(NSString *)image2Id
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
@@ -156,7 +170,7 @@ RCT_EXPORT_METHOD(matchFaceWithImage1Id:(NSString *)image1Id
     }];
 }
 
-RCT_EXPORT_METHOD(downloadImageWithImageId:(NSString *)imageId
+RCT_EXPORT_METHOD(downloadImage:(NSString *)imageId
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
@@ -169,6 +183,10 @@ RCT_EXPORT_METHOD(downloadImageWithImageId:(NSString *)imageId
 }
 
 // MARK: - Helpers
+- (void) rejectWithCancelationErrorWithRejecter: (RCTPromiseRejectBlock)reject {
+    reject(@"sdk_canceled", @"sdk is canceled by user", NULL);
+}
+
 - (void) presentViewController: (UIViewController *)vc {
     [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:vc animated:NO completion:nil];
 }

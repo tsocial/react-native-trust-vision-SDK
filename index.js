@@ -5,30 +5,30 @@ const { RNTrustVisionRnsdkFramework } = NativeModules;
 
 // Enum strings
 export const TVConst = {
-    TVOrientation: {
+    Orientation: {
         LANDSCAPE: 'landscape',
         PORTRAIT: 'portrait'
     },
-    TVQRType: {
+    QRType: {
         QRCODE: 'qrCode',
         BARCODE: 'barCode'
     },
-    TVActionMode: {
+    ActionMode: {
         FACE_MATCHING: 'faceMatching',
         FULL: 'full',
         LIVENESS: 'liveness',
         EXTRACT_ID_INFO: 'extractIdInfo'
     },
-    TVLivenessMode: {
+    LivenessMode: {
         ACTIVE: 'active',
         PASSIVE: 'passive'
     },
-    TVSelfieCameraMode: {
+    SelfieCameraMode: {
         FRONT: 'front',
         BACK: 'back',
         BOTH: 'both'
     },
-    TVCompareImageResult: {
+    CompareImageResult: {
         MATCHED: 'matched',
         UNMATCHED: 'unmatched',
         UNSURE: 'unsure'
@@ -39,7 +39,8 @@ export const TVErrorCode = {
     UNAUTHORIZED: 'authentication_missing_error',
     NETWORK_ERROR: 'network_error',
     INTERNAL_ERROR: 'internal_error',
-    TIMEOUT_ERROR: 'internal_error'
+    TIMEOUT_ERROR: 'timeout_error',
+    CANCELATION_ERROR: 'sdk_canceled'
 }
 
 export default RNTrustVisionRnsdkFramework;
