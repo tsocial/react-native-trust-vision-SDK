@@ -1,6 +1,7 @@
 package com.reactlibrary;
 
-import android.text.TextUtils;
+import android.graphics.Bitmap;
+import android.util.Base64;
 
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
@@ -10,11 +11,11 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.trustingsocial.apisdk.data.TVApiError;
 import com.trustingsocial.apisdk.utils.GsonUtils;
 import com.trustingsocial.tvsdk.TVDetectionError;
-import com.trustingsocial.tvsdk.TVDetectionResult;
 import com.trustingsocial.tvsdk.TVIDConfiguration;
 import com.trustingsocial.tvsdk.TVSDKConfiguration;
 import com.trustingsocial.tvsdk.TVSDKConfiguration.TVActionMode;
 import com.trustingsocial.tvsdk.TVSDKConfiguration.TVLivenessMode;
+import com.trustingsocial.tvsdk.TVSDKUtil;
 import com.trustingsocial.tvsdk.TVSelfieConfiguration;
 import com.trustingsocial.tvsdk.internal.TVCardType;
 
@@ -22,10 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 class RNTrustVisionUtils {
 
@@ -215,5 +214,16 @@ class RNTrustVisionUtils {
 
         }
         return GsonUtils.toJson(new TVApiError(errorCode, resultError.getErrorDescription()));
+    }
+
+    static String loadBase64Image(String imageUrl) {
+        if (imageUrl == null) return null;
+        try {
+            Bitmap bitmap = TVSDKUtil.loadImageFromStorage(imageUrl);
+            byte[] byteArray = TVSDKUtil.toByteArray(bitmap);
+            return Base64.encodeToString(byteArray, Base64.NO_WRAP);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }
