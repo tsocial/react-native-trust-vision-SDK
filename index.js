@@ -14,10 +14,10 @@ export const TVConst = {
         BARCODE: 'barCode'
     },
     ActionMode: {
-        FACE_MATCHING: 'faceMatching',
-        FULL: 'full',
-        LIVENESS: 'liveness',
-        EXTRACT_ID_INFO: 'extractIdInfo'
+        FACE_MATCHING: 'FACE_MATCHING',
+        FULL: 'FULL',
+        LIVENESS: 'LIVENESS',
+        EXTRACT_ID_INFO: 'EXTRACT_ID_INFO'
     },
     LivenessMode: {
         ACTIVE: 'active',
