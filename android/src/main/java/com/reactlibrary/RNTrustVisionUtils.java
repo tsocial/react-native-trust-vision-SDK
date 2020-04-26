@@ -37,6 +37,14 @@ class RNTrustVisionUtils {
         return array;
     }
 
+    static <T> WritableArray toWritableArrayObject(List<T> objects) {
+        WritableArray array = new WritableNativeArray();
+        for (T element : objects) {
+            array.pushString(element.toString());
+        }
+        return array;
+    }
+
     static WritableMap convertJsonToMap(JSONObject jsonObject) throws JSONException {
         WritableMap map = new WritableNativeMap();
 
@@ -109,7 +117,7 @@ class RNTrustVisionUtils {
                 case "FACE_MATCHING":
                     actionMode = TVActionMode.FACE_MATCHING;
                     break;
-                case "LIVENESS":
+                case "liveness":
                     actionMode = TVActionMode.LIVENESS;
                     break;
                 case "READ_CARD_INFO":

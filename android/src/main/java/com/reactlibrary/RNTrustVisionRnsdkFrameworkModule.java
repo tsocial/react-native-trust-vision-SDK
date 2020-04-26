@@ -112,7 +112,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
     @ReactMethod
     public void getLivenessOption(Promise promise) {
         try {
-            promise.resolve(TrustVisionSDK.getLivenessOptions());
+            promise.resolve(RNTrustVisionUtils.toWritableArrayObject(TrustVisionSDK.getLivenessOptions()));
         } catch (Exception ex) {
             promise.reject(INTERNAL_ERROR, ex.getMessage());
         }
