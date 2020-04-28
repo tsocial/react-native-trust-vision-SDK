@@ -17,7 +17,7 @@ export const TVConst = {
         FACE_MATCHING: 'FACE_MATCHING',
         FULL: 'FULL',
         LIVENESS: 'LIVENESS',
-        EXTRACT_ID_INFO: 'EXTRACT_ID_INFO'
+        EXTRACT_ID_INFO: 'READ_CARD_INFO'
     },
     LivenessMode: {
         ACTIVE: 'active',
