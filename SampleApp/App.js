@@ -33,7 +33,7 @@ import RNTrustVisionRnsdkFramework, {
 const App: () => React$Node = () => {
   const onPress = async () => {
     try {
-      await RNTrustVisionRnsdkFramework.initializeWithAcessKeyId(
+      await RNTrustVisionRnsdkFramework.initialize(
         '5767c20d-87aa-4cad-8dbb-f5429f76c34b',
         'c1446919-e60a-4575-a05d-304318212a1b',
         true,
@@ -47,9 +47,8 @@ const App: () => React$Node = () => {
         isEnableSelfieSanityCheck: false,
       };
       console.log('Config', config);
-      const result = await RNTrustVisionRnsdkFramework.startFlowWithConfig(
-        config,
-      );
+      // const result = await RNTrustVisionRnsdkFramework.startFlowWithConfig(
+      const result = await RNTrustVisionRnsdkFramework.startFlow(config);
       console.log('Result', result);
 
       if (result.idSanityResult && result.idSanityResult.error) {
@@ -137,6 +136,7 @@ const App: () => React$Node = () => {
         case TVErrorCode.NETWORK_ERROR:
         case TVErrorCode.INTERNAL_ERROR:
         case TVErrorCode.TIMEOUT_ERROR:
+        case TVErrorCode.CANCELATION_ERROR:
           console.log('Error: ', e.code, ' - ', e.message);
           break;
         default:
