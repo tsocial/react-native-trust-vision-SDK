@@ -40,15 +40,14 @@ const App: () => React$Node = () => {
       );
       const cardTypes = await RNTrustVisionRnsdkFramework.getCardTypes();
       const config = {
-        actionMode: TVConst.ActionMode.FULL,
-        cardType: cardTypes[0],
+        cameraOption: TVConst.SelfieCameraMode.FRONT,
+        isEnableSound: true,
+        isEnableSanityCheck: true,
         livenessMode: TVConst.LivenessMode.PASSIVE,
-        isEnableIDSanityCheck: true,
-        isEnableSelfieSanityCheck: false,
       };
       console.log('Config', config);
       // const result = await RNTrustVisionRnsdkFramework.startFlowWithConfig(
-      const result = await RNTrustVisionRnsdkFramework.startFlow(config);
+      const result = await RNTrustVisionRnsdkFramework.startSelfieCapturing(config);
       console.log('Result', result);
 
       if (result.idSanityResult && result.idSanityResult.error) {
