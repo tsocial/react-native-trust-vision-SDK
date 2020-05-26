@@ -169,6 +169,12 @@ class RNTrustVisionUtils {
         if (map.hasKey("isReadBothSide")) {
             configuration.setReadBothSide(map.getBoolean("isReadBothSide"));
         }
+
+        if (map.hasKey("cardSide")) {
+            String cardSideString = map.getString("cardSide").toUpperCase();
+            TVSDKConfiguration.TVCardSide cardSide = TVSDKConfiguration.TVCardSide.valueOf(cardSideString);
+            configuration.setCardSide(cardSide);
+        }
         return configuration.build();
     }
 

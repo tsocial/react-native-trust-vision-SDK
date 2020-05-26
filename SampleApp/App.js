@@ -42,16 +42,16 @@ const App: () => React$Node = () => {
       console.log('Card type list', cardTypes)
 
       // Full flow
-      const config = {
-        cardType: cardTypes[0],
-        cameraOption: TVConst.SelfieCameraMode.BACK,
-        isEnableSound: true,
-        isEnableSelfieSanityCheck: true,
-        isEnableIDSanityCheck: true,
-        livenessMode: TVConst.LivenessMode.PASSIVE,
-      };
-      console.log('Config', config);
-      const result = await RNTrustVisionRnsdkFramework.startFlow(config);
+      // const config = {
+      //   cardType: cardTypes[0],
+      //   cameraOption: TVConst.SelfieCameraMode.BACK,
+      //   isEnableSound: true,
+      //   isEnableSelfieSanityCheck: true,
+      //   isEnableIDSanityCheck: true,
+      //   livenessMode: TVConst.LivenessMode.PASSIVE,
+      // };
+      // console.log('Config', config);
+      // const result = await RNTrustVisionRnsdkFramework.startFlow(config);
 
       // Selfie Capturing
       // const config = {
@@ -64,14 +64,15 @@ const App: () => React$Node = () => {
       // const result = await RNTrustVisionRnsdkFramework.startSelfieCapturing(config);
 
       // Id capturing
-      // const config = {
-      //   cardType: cardTypes[0],
-      //   cardSide: TVConst.CardSide.FRONT,
-      //   isEnableSound: true,
-      //   isEnableSanityCheck: true,
-      // };
-      // console.log('Config', config);
-      // const result = await RNTrustVisionRnsdkFramework.startIdCapturing(config);
+      const config = {
+        cardType: cardTypes[0],
+        cardSide: TVConst.CardSide.BACK,
+        isEnableSound: true,
+        isEnableSanityCheck: true,
+        isReadBothSide: false
+      };
+      console.log('Config', config);
+      const result = await RNTrustVisionRnsdkFramework.startIdCapturing(config);
 
       console.log('Result', result);
 
