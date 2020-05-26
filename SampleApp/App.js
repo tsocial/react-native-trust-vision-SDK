@@ -40,7 +40,7 @@ const App: () => React$Node = () => {
       );
       const cardTypes = await RNTrustVisionRnsdkFramework.getCardTypes();
       const config = {
-        cameraOption: TVConst.SelfieCameraMode.FRONT,
+        cameraOption: TVConst.SelfieCameraMode.BACK,
         isEnableSound: true,
         isEnableSanityCheck: true,
         livenessMode: TVConst.LivenessMode.PASSIVE,
