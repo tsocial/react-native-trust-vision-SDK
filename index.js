@@ -32,6 +32,10 @@ export const TVConst = {
         MATCHED: 'matched',
         UNMATCHED: 'unmatched',
         UNSURE: 'unsure'
+    },
+    CardSide: {
+        FRONT: 'front',
+        BACK: 'back'
     }
 }
 

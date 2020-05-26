@@ -39,15 +39,40 @@ const App: () => React$Node = () => {
         true,
       );
       const cardTypes = await RNTrustVisionRnsdkFramework.getCardTypes();
+      console.log('Card type list', cardTypes)
+
+      // Full flow
       const config = {
+        cardType: cardTypes[0],
         cameraOption: TVConst.SelfieCameraMode.BACK,
         isEnableSound: true,
-        isEnableSanityCheck: true,
+        isEnableSelfieSanityCheck: true,
+        isEnableIDSanityCheck: true,
         livenessMode: TVConst.LivenessMode.PASSIVE,
       };
       console.log('Config', config);
-      // const result = await RNTrustVisionRnsdkFramework.startFlowWithConfig(
-      const result = await RNTrustVisionRnsdkFramework.startSelfieCapturing(config);
+      const result = await RNTrustVisionRnsdkFramework.startFlow(config);
+
+      // Selfie Capturing
+      // const config = {
+      //   cameraOption: TVConst.SelfieCameraMode.BOTH,
+      //   isEnableSound: true,
+      //   isEnableSanityCheck: true,
+      //   livenessMode: TVConst.LivenessMode.PASSIVE,
+      // };
+      // console.log('Config', config);
+      // const result = await RNTrustVisionRnsdkFramework.startSelfieCapturing(config);
+
+      // Id capturing
+      // const config = {
+      //   cardType: cardTypes[0],
+      //   cardSide: TVConst.CardSide.FRONT,
+      //   isEnableSound: true,
+      //   isEnableSanityCheck: true,
+      // };
+      // console.log('Config', config);
+      // const result = await RNTrustVisionRnsdkFramework.startIdCapturing(config);
+
       console.log('Result', result);
 
       if (result.idSanityResult && result.idSanityResult.error) {

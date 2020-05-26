@@ -136,7 +136,7 @@ class RNTrustVisionUtils {
         }
 
         if (map.hasKey("cameraOption")) {
-            configuration.setCameraOption(TVSDKConfiguration.TVCameraOption.values()[map.getInt("cameraOption")]);
+            configuration.setCameraOption(TVSDKConfiguration.TVCameraOption.valueOf(map.getString("cameraOption").toUpperCase()));
         }
 
         if (map.hasKey("isEnableIDSanityCheck")) {

@@ -217,11 +217,11 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNTrustVisionRnsdkFramework (1.0.8):
+  - RNTrustVisionRnsdkFramework (1.0.9):
     - React
-    - TrustVisionSDKFramework (~> 1.0.8)
+    - TrustVisionSDKFramework (~> 1.0.9)
   - TrustVisionAPIFramework (1.0.8)
-  - TrustVisionSDKFramework (1.0.8):
+  - TrustVisionSDKFramework (1.0.9):
     - TrustVisionAPIFramework (~> 1.0.8)
   - Yoga (1.14.0)
 
@@ -344,9 +344,9 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNTrustVisionRnsdkFramework: 11eb4c4774b5ce82281f196ed61d1f96f8b34ce6
+  RNTrustVisionRnsdkFramework: 45db1c5f7756c7f7072df206cf1d005571c60c58
   TrustVisionAPIFramework: 7d9bb5812ded7134119bee70724754340accdf7d
-  TrustVisionSDKFramework: 7fccf22ef6fbd1e1b5bcd2fa10ab4c2770142b24
+  TrustVisionSDKFramework: 5f0fd8366f08e953f696ac4be61777feed9f15be
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
 PODFILE CHECKSUM: 5b076545c84fde7ffb5d8da15d694ac5161b1808
