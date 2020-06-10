@@ -3,115 +3,12 @@
 #import "RNTrustVisionRnsdkFramework.h"
 #import <React/RCTConvert.h>
 @import TrustVisionSDK;
-@import TrustVisionAPI;
 
 @implementation RNTrustVisionRnsdkFramework
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(initialize:(NSString *)accessKeyId
-                  accessKeySecret:(NSString *)accessKeySecret
-                  isForce:(BOOL) isForce
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    [TrustVisionSdk initializeWithAccessKeyId:accessKeyId
-                              accessKeySecret:(NSString * _Nonnull)accessKeySecret
-                            localizationFiles:NULL
-                                     isForced:isForce
-                                      success:^{
-        resolve(@"Initialize TV framework done.");
-    }
-                                      failure:^(TVError * error) {
-        [self rejectWithRejecter:reject TvError: error];
-    }];
-}
-
-// MARK: - Get settings
-RCT_EXPORT_METHOD(getCardTypes:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    NSArray<TVCardType *> *cardTypes = [TrustVisionSdk getCardTypes];
-    NSMutableArray<NSDictionary *> *cardTypeDicts = [[NSMutableArray alloc] init];
-    for (TVCardType *cardType in cardTypes) {
-        NSDictionary *cardTypeDict = [cardType toDictionary];
-        [cardTypeDicts addObject:cardTypeDict];
-    }
-    resolve(cardTypeDicts);
-}
-
-RCT_EXPORT_METHOD(getSelfieCameraMode:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    TVCameraOption cameraMode = [TrustVisionSdk getSelfieCameraMode];
-    resolve(@(cameraMode));
-}
-
-RCT_EXPORT_METHOD(getLivenessOption:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    NSArray<NSString *> *livenessOptions = [TrustVisionSdk getLivenessOptions];
-    resolve(livenessOptions);
-}
-
-RCT_EXPORT_METHOD(getIdCardSanityCheckingEnable:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    BOOL idCardSanityChecking = [TrustVisionSdk getIdCardSanityCheckingEnable];
-    resolve(@(idCardSanityChecking));
-}
-
-RCT_EXPORT_METHOD(getSelfieSanityCheckingEnable:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    BOOL selfieSanityChecking = [TrustVisionSdk getSelfieSanityCheckingEnable];
-    resolve(@(selfieSanityChecking));
-}
-
 // MARK: - Flows
-RCT_EXPORT_METHOD(startTransaction:(NSString *)referenceId
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    [TrustVisionSdk startTransactionWithReferenceId:referenceId success:^(NSString * transactionId) {
-        resolve(transactionId);
-    } failure:^(TVError * error) {
-        [self rejectWithRejecter:reject TvError: error];
-    }];
-}
-
-RCT_EXPORT_METHOD(endTransactionWithResolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    [TrustVisionSdk endTransactionWithSuccess:^{
-        resolve(@{});
-    } failure:^(TVError * error) {
-        [self rejectWithRejecter:reject TvError: error];
-    }];
-}
-
-RCT_EXPORT_METHOD(startFlow:(NSDictionary *)configDict
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    TVSDKConfig *config = [TVSDKConfig dictToObjWithDict: configDict];
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *mainVc = [TrustVisionSdk newCameraViewControllerWithConfig:config
-                                                                             success:^(TVDetectionResult * result) {
-            resolve([result toDictionary]);
-        }
-                                                                             failure:^(TVError * error) {
-            [self rejectWithRejecter:reject TvError: error];
-        }
-                                                                        cancellation:^{
-            [self rejectWithCancelationErrorWithRejecter:reject];
-        }];
-        
-        [self presentViewController:mainVc];
-    });
-}
-
 RCT_EXPORT_METHOD(startIdCapturing:(NSDictionary *)configDict
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
@@ -119,16 +16,12 @@ RCT_EXPORT_METHOD(startIdCapturing:(NSDictionary *)configDict
     TVIdCardConfiguration *config = [TVIdCardConfiguration dictToObjWithDict: configDict];
 
     dispatch_async(dispatch_get_main_queue(), ^{
-
         UIViewController *mainVc = [TrustVisionSdk startIdCapturingWithConfiguration:config
                                                                              success:^(TVDetectionResult * result) {
             resolve([result toDictionary]);
         }
                                                                              failure:^(TVError * error) {
             [self rejectWithRejecter:reject TvError: error];
-        }
-                                                                        cancellation:^{
-            [self rejectWithCancelationErrorWithRejecter:reject];
         }];
         
         [self presentViewController:mainVc];
@@ -149,37 +42,10 @@ RCT_EXPORT_METHOD(startSelfieCapturing:(NSDictionary *)configDict
         }
                                                                                  failure:^(TVError * error) {
             [self rejectWithRejecter:reject TvError: error];
-        }
-                                                                            cancellation:^{
-            [self rejectWithCancelationErrorWithRejecter:reject];
         }];
 
         [self presentViewController:mainVc];
     });
-}
-
-RCT_EXPORT_METHOD(matchFace:(NSString *)image1Id
-                  image2Id:(NSString *)image2Id
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    [TrustVisionSdk matchFaceWithImage1Id:image1Id image2Id:image2Id success:^(TVCompareFacesResult * result) {
-        resolve([result toDictionary]);
-    } failure:^(TVError * error) {
-        [self rejectWithRejecter:reject TvError: error];
-    }];
-}
-
-RCT_EXPORT_METHOD(downloadImage:(NSString *)imageId
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-    [TrustVisionSdk downloadImageWithImageId:imageId success:^(UIImage * image) {
-        NSString *base64 = [self getBase64StringFromImage: image];
-        resolve(base64);
-    } failure:^(TVError * error) {
-        [self rejectWithRejecter:reject TvError: error];
-    }];
 }
 
 // MARK: - Helpers
