@@ -119,11 +119,11 @@ class RNTrustVisionUtils {
     }
 
     private static TVCardType readCardType(ReadableMap readableMap) {
-        String cardId = readableMap.getString("cardId");
-        String cardName = readableMap.getString("cardName");
+        String cardId = readableMap.getString("id");
+        String cardName = readableMap.getString("name");
         String orientation = readableMap.getString("orientation");
-        boolean isRequireBackSide = readableMap.getBoolean("requireBackside");
-        return new TVCardType(cardId, cardName, isRequireBackSide, TVCardType.TVCardOrientation.valueOf(orientation));
+        boolean isRequireBackSide = readableMap.getBoolean("hasBackSide");
+        return new TVCardType(cardId, cardName, isRequireBackSide, TVCardType.TVCardOrientation.valueOf(orientation.toUpperCase()));
 
     }
 

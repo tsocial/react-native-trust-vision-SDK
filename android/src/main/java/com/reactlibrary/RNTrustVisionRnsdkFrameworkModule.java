@@ -86,8 +86,12 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
     private WritableMap convertResult(Bitmap bitmap, Bitmap bitmap1) throws Exception {
         WritableMap result = new WritableNativeMap();
-        result.putString("id_front_image", RNTrustVisionUtils.convertBitmapToBase64(bitmap));
-        result.putString("id_back_image", RNTrustVisionUtils.convertBitmapToBase64(bitmap1));
+        if (bitmap != null) {
+            result.putString("id_front_image", RNTrustVisionUtils.convertBitmapToBase64(bitmap));
+        }
+        if (bitmap1 != null) {
+            result.putString("id_back_image", RNTrustVisionUtils.convertBitmapToBase64(bitmap1));
+        }
         return result;
     }
 
@@ -95,7 +99,9 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         WritableMap result = new WritableNativeMap();
         WritableArray bitmapArray = new WritableNativeArray();
         for (Bitmap bitmap: bitmapList) {
-            bitmapArray.pushString(RNTrustVisionUtils.convertBitmapToBase64(bitmap));
+            if (bitmap != null) {
+                bitmapArray.pushString(RNTrustVisionUtils.convertBitmapToBase64(bitmap));
+            }
         }
         result.putArray("selfie_images", bitmapArray);
 

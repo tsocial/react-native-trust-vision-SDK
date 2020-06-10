@@ -6,8 +6,8 @@ const { RNTrustVisionRnsdkFramework } = NativeModules;
 // Enum strings
 export const TVConst = {
     Orientation: {
-        LANDSCAPE: 'landscape',
-        PORTRAIT: 'portrait'
+        LANDSCAPE: 'horizontal',
+        PORTRAIT: 'vertical'
     },
     QRType: {
         QRCODE: 'qrCode',
