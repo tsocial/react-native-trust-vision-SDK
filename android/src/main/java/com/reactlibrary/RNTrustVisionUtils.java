@@ -8,12 +8,8 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
-import com.trustingsocial.apisdk.data.TVApiError;
-import com.trustingsocial.apisdk.utils.GsonUtils;
-import com.trustingsocial.tvsdk.TVDetectionError;
 import com.trustingsocial.tvsdk.TVIDConfiguration;
 import com.trustingsocial.tvsdk.TVSDKConfiguration;
-import com.trustingsocial.tvsdk.TVSDKConfiguration.TVActionMode;
 import com.trustingsocial.tvsdk.TVSDKConfiguration.TVLivenessMode;
 import com.trustingsocial.tvsdk.TVSDKUtil;
 import com.trustingsocial.tvsdk.TVSelfieConfiguration;
@@ -24,26 +20,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
-import java.util.List;
 
 class RNTrustVisionUtils {
 
-    static <T> WritableArray toWritableArray(List<T> objects) throws JSONException {
-        WritableArray array = new WritableNativeArray();
-        for (T element : objects) {
-            WritableMap map = convertJsonToMap(new JSONObject(GsonUtils.toJson(element)));
-            array.pushMap(map);
-        }
-        return array;
-    }
-
-    static <T> WritableArray toWritableArrayObject(List<T> objects) {
-        WritableArray array = new WritableNativeArray();
-        for (T element : objects) {
-            array.pushString(element.toString());
-        }
-        return array;
-    }
+//    static <T> WritableArray toWritableArray(List<T> objects) throws JSONException {
+//        WritableArray array = new WritableNativeArray();
+//        for (T element : objects) {
+//            WritableMap map = convertJsonToMap(new JSONObject(GsonUtils.toJson(element)));
+//            array.pushMap(map);
+//        }
+//        return array;
+//    }
+//
+//    static <T> WritableArray toWritableArrayObject(List<T> objects) {
+//        WritableArray array = new WritableNativeArray();
+//        for (T element : objects) {
+//            array.pushString(element.toString());
+//        }
+//        return array;
+//    }
 
     static WritableMap convertJsonToMap(JSONObject jsonObject) throws JSONException {
         WritableMap map = new WritableNativeMap();
@@ -70,10 +65,10 @@ class RNTrustVisionUtils {
         }
         return map;
     }
-
-    static WritableMap objectToMap(Object object) throws JSONException {
-        return convertJsonToMap(new JSONObject(GsonUtils.toJson(object)));
-    }
+//
+//    static WritableMap objectToMap(Object object) throws JSONException {
+//        return convertJsonToMap(new JSONObject(GsonUtils.toJson(object)));
+//    }
 
     static WritableArray convertJsonToArray(JSONArray jsonArray) throws JSONException {
         WritableArray array = new WritableNativeArray();
@@ -99,57 +94,6 @@ class RNTrustVisionUtils {
         return array;
     }
 
-    static TVSDKConfiguration convertConfigFromMap(ReadableMap map) {
-        TVSDKConfiguration.Builder configuration = new TVSDKConfiguration.Builder();
-
-        if (map.hasKey("isEnableSound")) {
-            configuration.setEnableSound(map.getBoolean("isEnableSound"));
-        }
-
-        if (map.hasKey("livenessMode")) {
-            TVLivenessMode livenessMode = TVLivenessMode.valueOf(map.getString("livenessMode").toUpperCase());
-            configuration.setLivenessMode(livenessMode);
-        }
-
-        if (map.hasKey("actionMode")) {
-            TVActionMode actionMode;
-            switch (map.getString("actionMode")) {
-                case "FACE_MATCHING":
-                    actionMode = TVActionMode.FACE_MATCHING;
-                    break;
-                case "liveness":
-                    actionMode = TVActionMode.LIVENESS;
-                    break;
-                case "READ_CARD_INFO":
-                    actionMode = TVActionMode.READ_CARD_INFO_TWO_SIDE;
-                    break;
-                default:
-                    actionMode = TVActionMode.FULL;
-
-            }
-            configuration.setActionMode(actionMode);
-        }
-
-        if (map.hasKey("cardType")) {
-            ReadableMap cardMap = map.getMap("cardType");
-            configuration.setCardType(readCardType(cardMap));
-        }
-
-        if (map.hasKey("cameraOption")) {
-            configuration.setCameraOption(TVSDKConfiguration.TVCameraOption.valueOf(map.getString("cameraOption").toUpperCase()));
-        }
-
-        if (map.hasKey("isEnableIDSanityCheck")) {
-            configuration.setEnableIDSanityCheck(map.getBoolean("isEnableIDSanityCheck"));
-        }
-
-        if (map.hasKey("isEnableSelfieSanityCheck")) {
-            configuration.setEnableSelfieSanityCheck(map.getBoolean("isEnableSelfieSanityCheck"));
-        }
-
-        return configuration.build();
-    }
-
     static TVIDConfiguration convertIdConfigFromMap(ReadableMap map) {
         TVIDConfiguration.Builder configuration = new TVIDConfiguration.Builder();
 
@@ -160,10 +104,6 @@ class RNTrustVisionUtils {
         if (map.hasKey("cardType")) {
             ReadableMap cardMap = map.getMap("cardType");
             configuration.setCardType(readCardType(cardMap));
-        }
-
-        if (map.hasKey("isEnableSanityCheck")) {
-            configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
         }
 
         if (map.hasKey("isReadBothSide")) {
@@ -203,31 +143,7 @@ class RNTrustVisionUtils {
             configuration.setCameraOption(TVSDKConfiguration.TVCameraOption.valueOf(map.getString("cameraOption").toUpperCase()));
         }
 
-        if (map.hasKey("isEnableSanityCheck")) {
-            configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
-        }
-
         return configuration.build();
-    }
-
-    static String convertErrorString(TVDetectionError resultError) {
-        String errorCode;
-        switch (resultError.getErrorCode()) {
-            case TVDetectionError.DETECTION_ERROR_AUTHENTICATION_MISSING:
-                errorCode = "authentication_missing_error";
-                break;
-            case TVDetectionError.DETECTION_ERROR_CAMERA_ERROR:
-                errorCode = "camera_error";
-                break;
-            case TVDetectionError.DETECTION_ERROR_PERMISSION_MISSING:
-                errorCode = "permission_missing_error";
-                break;
-            default:
-                errorCode = resultError.getDetailErrorCode();
-                break;
-
-        }
-        return GsonUtils.toJson(new TVApiError(errorCode, resultError.getErrorDescription()));
     }
 
     static String loadBase64Image(String imageUrl) {
@@ -239,5 +155,10 @@ class RNTrustVisionUtils {
         } catch (Exception ex) {
             return null;
         }
+    }
+
+    static String convertBitmapToBase64(Bitmap bitmap) {
+        byte[] byteArray = TVSDKUtil.toByteArray(bitmap);
+        return Base64.encodeToString(byteArray, Base64.NO_WRAP);
     }
 }
