@@ -18,6 +18,7 @@ RCT_EXPORT_METHOD(initialize:(NSString *)accessKeyId
     [TrustVisionSdk initializeWithAccessKeyId:accessKeyId
                               accessKeySecret:(NSString * _Nonnull)accessKeySecret
                             localizationFiles:NULL
+                                 languageCode:@"vi"
                                      isForced:isForce
                                       success:^{
         resolve(@"Initialize TV framework done.");
