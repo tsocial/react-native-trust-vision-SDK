@@ -84,7 +84,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         if (TextUtils.isEmpty(accessKeyId) || TextUtils.isEmpty(accessKeySecret)) {
             TrustVisionSDK.init(activity, listener);
         } else {
-            TrustVisionSDK.init(activity, accessKeyId, accessKeySecret, listener);
+            TrustVisionSDK.init(activity, accessKeyId, accessKeySecret, "vi", listener);
         }
     }
 
