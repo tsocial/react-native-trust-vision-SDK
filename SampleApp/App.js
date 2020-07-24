@@ -69,7 +69,7 @@ const App: () => React$Node = () => {
         cardSide: TVConst.CardSide.BACK,
         isEnableSound: true,
         isEnableSanityCheck: true,
-        isReadBothSide: true
+        isReadBothSide: false
       };
       console.log('Config', config);
       const result = await RNTrustVisionRnsdkFramework.startIdCapturing(config);
