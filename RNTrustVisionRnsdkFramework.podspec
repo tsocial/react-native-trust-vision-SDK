@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 
 
   s.dependency "React"
-  s.dependency 'TrustVisionSDKFramework', '~> 1.0.11'
   s.dependency 'TensorFlowLiteSwift', '~> 2.2.0'
+  s.dependency 'TrustVisionSDKFramework', '~> 1.0.11'
 
 end
