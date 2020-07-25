@@ -63,7 +63,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
             }
         };
 
-        TrustVisionSDK.init(activity, accessKeyId, accessKeySecret, listener);
+        TrustVisionSDK.init(activity, accessKeyId, accessKeySecret, "vi", listener);
     }
 
     @ReactMethod

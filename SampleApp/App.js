@@ -58,7 +58,7 @@ const App: () => React$Node = () => {
       //   cameraOption: TVConst.SelfieCameraMode.BOTH,
       //   isEnableSound: true,
       //   isEnableSanityCheck: true,
-      //   livenessMode: TVConst.LivenessMode.PASSIVE,
+      //   livenessMode: TVConst.LivenessMode.ACTIVE,
       // };
       // console.log('Config', config);
       // const result = await RNTrustVisionRnsdkFramework.startSelfieCapturing(config);
