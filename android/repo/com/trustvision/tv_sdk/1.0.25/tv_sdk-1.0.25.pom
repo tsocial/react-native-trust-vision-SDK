@@ -66,5 +66,17 @@
       <version>27.0.1</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.tensorflow</groupId>
+      <artifactId>tensorflow-lite</artifactId>
+      <version>0.0.0-nightly</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.tensorflow</groupId>
+      <artifactId>tensorflow-lite-gpu</artifactId>
+      <version>0.0.0-nightly</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 </project>
