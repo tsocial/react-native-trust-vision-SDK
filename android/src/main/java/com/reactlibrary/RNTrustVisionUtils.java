@@ -166,6 +166,10 @@ class RNTrustVisionUtils {
             configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
         }
 
+        if (map.hasKey("isEnableDetectingIdCardTampering")) {
+            configuration.setEnableDetectIdCardTampering(map.getBoolean("isEnableDetectingIdCardTampering"));
+        }
+
         if (map.hasKey("isReadBothSide")) {
             configuration.setReadBothSide(map.getBoolean("isReadBothSide"));
         }
