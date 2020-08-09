@@ -147,6 +147,14 @@ class RNTrustVisionUtils {
             configuration.setEnableSelfieSanityCheck(map.getBoolean("isEnableSelfieSanityCheck"));
         }
 
+        if (map.hasKey("isEnableDetectingIdCardTampering")) {
+            configuration.setEnableDetectIdCardTampering(map.getBoolean("isEnableDetectingIdCardTampering"));
+        }
+
+        if (map.hasKey("idTamperingLevel")) {
+            configuration.setIdTamperingLevel(map.getString("idTamperingLevel"));
+        }
+
         return configuration.build();
     }
 
@@ -166,10 +174,6 @@ class RNTrustVisionUtils {
             configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
         }
 
-        if (map.hasKey("isEnableDetectingIdCardTampering")) {
-            configuration.setEnableDetectIdCardTampering(map.getBoolean("isEnableDetectingIdCardTampering"));
-        }
-
         if (map.hasKey("isReadBothSide")) {
             configuration.setReadBothSide(map.getBoolean("isReadBothSide"));
         }
@@ -179,6 +183,15 @@ class RNTrustVisionUtils {
             TVSDKConfiguration.TVCardSide cardSide = TVSDKConfiguration.TVCardSide.valueOf(cardSideString);
             configuration.setCardSide(cardSide);
         }
+
+        if (map.hasKey("isEnableDetectingIdCardTampering")) {
+            configuration.setEnableDetectIdCardTampering(map.getBoolean("isEnableDetectingIdCardTampering"));
+        }
+
+        if (map.hasKey("idTamperingLevel")) {
+            configuration.setIdTamperingLevel(map.getString("idTamperingLevel"));
+        }
+
         return configuration.build();
     }
 
