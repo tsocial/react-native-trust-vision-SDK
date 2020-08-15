@@ -21,7 +21,8 @@ export const TVConst = {
     },
     LivenessMode: {
         ACTIVE: 'active',
-        PASSIVE: 'passive'
+        PASSIVE: 'passive',
+        HYBRID: 'hybrid'
     },
     SelfieCameraMode: {
         FRONT: 'front',
