@@ -49,7 +49,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
     }
 
     @ReactMethod
-    public void initialize(String accessKeyId, String accessKeySecret, Boolean isForce, final Promise promise) {
+    public void initialize(String accessKeyId, String accessKeySecret, String endpoint, Boolean isForce, final Promise promise) {
         Activity activity = getCurrentActivity();
         TrustVisionSDK.TVInitializeListener listener = new TrustVisionSDK.TVInitializeListener() {
             @Override
@@ -63,11 +63,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
             }
         };
 
-        TrustVisionSDK.init(activity, accessKeyId, accessKeySecret, "vi", listener);
+        TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", listener);
     }
 
     @ReactMethod
-    public void initialize(String accessKeyId, String accessKeySecret, final Promise promise) {
+    public void initialize(String accessKeyId, String accessKeySecret, String endpoint, final Promise promise) {
         Activity activity = getCurrentActivity();
         TrustVisionSDK.TVInitializeListener listener = new TrustVisionSDK.TVInitializeListener() {
             @Override
@@ -82,9 +82,9 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         };
 
         if (TextUtils.isEmpty(accessKeyId) || TextUtils.isEmpty(accessKeySecret)) {
-            TrustVisionSDK.init(activity, listener);
+            TrustVisionSDK.init(activity, endpoint, "vi", listener);
         } else {
-            TrustVisionSDK.init(activity, accessKeyId, accessKeySecret, "vi", listener);
+            TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", listener);
         }
     }
 

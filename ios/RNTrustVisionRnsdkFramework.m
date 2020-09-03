@@ -11,12 +11,14 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(initialize:(NSString *)accessKeyId
                   accessKeySecret:(NSString *)accessKeySecret
+                  endpoint:(NSString *)endpoint
                   isForce:(BOOL) isForce
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
     [TrustVisionSdk initializeWithAccessKeyId:accessKeyId
                               accessKeySecret:(NSString * _Nonnull)accessKeySecret
+                                      baseUrl:endpoint
                             localizationFiles:NULL
                                  languageCode:@"vi"
                                      isForced:isForce
