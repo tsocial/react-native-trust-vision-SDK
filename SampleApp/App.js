@@ -48,6 +48,7 @@ const App: () => React$Node = () => {
       };
       console.log('Id Config', idConfig);
       const idResult = await RNTrustVisionRnsdkFramework.startIdCapturing(
+        'vi',
         idConfig,
       );
       console.log('Id Result', idResult);
@@ -60,6 +61,7 @@ const App: () => React$Node = () => {
       // };
       // console.log('Selfie Config', selfieConfig);
       // const selfieResult = await RNTrustVisionRnsdkFramework.startSelfieCapturing(
+      //   'vi',
       //   selfieConfig,
       // );
       // console.log('Selfie Result', selfieResult);

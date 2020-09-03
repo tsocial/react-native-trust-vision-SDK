@@ -38,10 +38,10 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
     }
 
     @ReactMethod
-    public void startIdCapturing(ReadableMap config, final Promise promise) {
+    public void startIdCapturing(ReadableMap config, String languageCode, final Promise promise) {
         try {
             TVIDConfiguration configuration = RNTrustVisionUtils.convertIdConfigFromMap(config);
-            TrustVisionSDK.startIDCapturing(getCurrentActivity(), configuration, new TVCapturingCallBack() {
+            TrustVisionSDK.startIDCapturing(getCurrentActivity(), languageCode, configuration, new TVCapturingCallBack() {
                 @Override
                 public void onError(TVCaptureError tvCaptureError) {
                     promise.reject(Integer.toString(tvCaptureError.getErrorCode()), tvCaptureError.getErrorDescription());
@@ -67,10 +67,10 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
     }
 
     @ReactMethod
-    public void startSelfieCapturing(ReadableMap config, final Promise promise) {
+    public void startSelfieCapturing(ReadableMap config, String languageCode, final Promise promise) {
         try {
             TVSelfieConfiguration configuration = RNTrustVisionUtils.convertSelfieConfigFromMap(config);
-            TrustVisionSDK.startSelfieCapturing(getCurrentActivity(), configuration, new TVSelfieCapturingCallback() {
+            TrustVisionSDK.startSelfieCapturing(getCurrentActivity(), languageCode, configuration, new TVSelfieCapturingCallback() {
                 @Override
                 public void onError(TVCaptureError tvCaptureError) {
                     promise.reject(Integer.toString(tvCaptureError.getErrorCode()), tvCaptureError.getErrorDescription());

@@ -10,18 +10,19 @@ RCT_EXPORT_MODULE();
 
 // MARK: - Flows
 RCT_EXPORT_METHOD(startIdCapturing:(NSDictionary *)configDict
+                  languageCode:(NSString *)languageCode
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
     TVIdCardConfiguration *config = [TVIdCardConfiguration dictToObjWithDict: configDict];
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *mainVc = [TrustVisionSdk startIdCapturingWithConfiguration:config
-                                                                             success:^(TVDetectionResult * result) {
+        UIViewController *mainVc = [TrustVisionSdk startIdCapturingWithLanguageCode:languageCode configuration:config success:^(TVDetectionResult * result) {
             resolve([result toDictionary]);
-        }
-                                                                             failure:^(TVError * error) {
+        } failure:^(TVError * error) {
             [self rejectWithRejecter:reject TvError: error];
+        } cancellation:^{
+            [self rejectWithCancelationErrorWithRejecter:reject];
         }];
         
         [self presentViewController:mainVc];
@@ -29,6 +30,7 @@ RCT_EXPORT_METHOD(startIdCapturing:(NSDictionary *)configDict
 }
 
 RCT_EXPORT_METHOD(startSelfieCapturing:(NSDictionary *)configDict
+                  languageCode:(NSString *)languageCode
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
@@ -36,12 +38,12 @@ RCT_EXPORT_METHOD(startSelfieCapturing:(NSDictionary *)configDict
 
     dispatch_async(dispatch_get_main_queue(), ^{
 
-        UIViewController *mainVc = [TrustVisionSdk startSelfieCapturingWithConfiguration:config
-                                                                                 success:^(TVDetectionResult * result) {
+        UIViewController *mainVc = [TrustVisionSdk startSelfieCapturingWithLanguageCode:languageCode configuration:config success:^(TVDetectionResult * result) {
             resolve([result toDictionary]);
-        }
-                                                                                 failure:^(TVError * error) {
+        } failure:^(TVError * error) {
             [self rejectWithRejecter:reject TvError: error];
+        } cancellation:^{
+            [self rejectWithCancelationErrorWithRejecter:reject];
         }];
 
         [self presentViewController:mainVc];
