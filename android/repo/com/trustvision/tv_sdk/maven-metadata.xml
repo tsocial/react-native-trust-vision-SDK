@@ -3,18 +3,15 @@
   <groupId>com.trustvision</groupId>
   <artifactId>tv_sdk</artifactId>
   <versioning>
-    <release>1.0.24-ui-only</release>
+    <release>1.0.26-ui-only</release>
     <versions>
-      <version>1.0.21</version>
-      <version>1.0.22</version>
-      <version>1.0.20</version>
-      <version>1.0.0</version>
-      <version>1.0.23</version>
-      <version>1.0.24</version>
-      <version>1.0.19.1-hotfix</version>
       <version>1.0.25</version>
-      <version>1.0.24-ui-only</version>
+      <version>1.0.27</version>
+      <version>1.0.25-ui-only</version>
+      <version>1.0.22</version>
+      <version>1.0.26</version>
+      <version>1.0.26-ui-only</version>
     </versions>
-    <lastUpdated>20200610033431</lastUpdated>
+    <lastUpdated>20200903042038</lastUpdated>
   </versioning>
 </metadata>

@@ -23,6 +23,7 @@ import java.util.List;
 
 public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModule {
     private static String INTERNAL_ERROR = "internal_error";
+    private static String SDK_CANCELED = "sdk_canceled";
 
     private final ReactApplicationContext reactContext;
 
@@ -54,6 +55,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                         promise.reject(INTERNAL_ERROR, "Parse result error");
                     }
                 }
+
+                @Override
+                public void onCanceled() {
+                    promise.reject(SDK_CANCELED, "sdk is canceled by user");
+                }
             });
         } catch (Exception ex) {
             promise.reject(INTERNAL_ERROR, ex.getMessage());
@@ -77,6 +83,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                     } catch (Exception e) {
                         promise.reject(INTERNAL_ERROR, "Parse result error");
                     }
+                }
+
+                @Override
+                public void onCanceled() {
+                    promise.reject(SDK_CANCELED, "sdk is canceled by user");
                 }
             });
         } catch (Exception ex) {
