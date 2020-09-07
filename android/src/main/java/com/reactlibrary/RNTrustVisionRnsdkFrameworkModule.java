@@ -59,7 +59,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
             @Override
             public void onInitError(TVDetectionError tvDetectionError) {
-                promise.reject(String.valueOf(tvDetectionError.getErrorCode()), tvDetectionError.getErrorDescription());
+                promise.reject(String.valueOf(tvDetectionError.getDetailErrorCode()), tvDetectionError.getErrorDescription());
             }
         };
 
@@ -77,7 +77,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
 
             @Override
             public void onInitError(TVDetectionError tvDetectionError) {
-                promise.reject(String.valueOf(tvDetectionError.getErrorCode()), tvDetectionError.getErrorDescription());
+                promise.reject(String.valueOf(tvDetectionError.getDetailErrorCode()), tvDetectionError.getErrorDescription());
             }
         };
 

@@ -5,13 +5,10 @@
   <versioning>
     <release>1.0.25</release>
     <versions>
+      <version>1.0.26-ui-only</version>
       <version>1.0.25</version>
       <version>1.0.27</version>
-      <version>1.0.25-ui-only</version>
-      <version>1.0.22</version>
-      <version>1.0.26</version>
-      <version>1.0.26-ui-only</version>
     </versions>
-    <lastUpdated>20200901072806</lastUpdated>
+    <lastUpdated>20200907102219</lastUpdated>
   </versioning>
 </metadata>
