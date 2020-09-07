@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "RNTrustVisionRnsdkFramework"
-  s.version      = "1.0.11-ui-only"
+  s.version      = "1.0.12-OCB"
   s.summary      = "RNTrustVisionRnsdkFramework"
   s.description  = <<-DESC
                   RNTrustVisionRnsdkFramework
@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
 
 
   s.dependency "React"
-  s.dependency 'TrustVisionSDKFramework', '~> 1.0.12-ui-only'
+  s.dependency 'TrustVisionSDKFramework', '~> 1.0.12-OCB'
 
 end
