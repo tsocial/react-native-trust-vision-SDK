@@ -7,9 +7,9 @@
   <packaging>aar</packaging>
   <dependencies>
     <dependency>
-      <groupId>com.trustvision</groupId>
+      <groupId>tv_sdk_android</groupId>
       <artifactId>tv_api_sdk</artifactId>
-      <version>1.0.25</version>
+      <version>unspecified</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
