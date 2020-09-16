@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "RNTrustVisionRnsdkFramework"
-  s.version      = "1.0.15-msb"
+  s.version      = "1.0.14-mafc"
   s.summary      = "RNTrustVisionRnsdkFramework"
   s.description  = <<-DESC
                   RNTrustVisionRnsdkFramework
@@ -19,6 +19,6 @@ Pod::Spec.new do |s|
 
   s.dependency "React"
   s.dependency 'TensorFlowLiteSwift', '~> 2.2.0'
-  s.dependency 'TrustVisionSDKFramework', '~> 1.0.15-msb'
+  s.dependency 'TrustVisionSDKFramework', '~> 1.0.14-mafc'
 
 end
