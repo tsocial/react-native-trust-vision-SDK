@@ -34,37 +34,38 @@ const App: () => React$Node = () => {
   const onPress = async () => {
     try {
       // id capturing
-      const cardType = {
-        id: 'card_id',
-        name: 'card_name',
-        orientation: TVConst.Orientation.LANDSCAPE,
-        hasBackSide: true,
-      };
-      const idConfig = {
-        cardType: cardType,
-        isEnableSound: false,
-        isReadBothSide: true,
-        cardSide: TVConst.CardSide.FRONT,
-      };
-      console.log('Id Config', idConfig);
-      const idResult = await RNTrustVisionRnsdkFramework.startIdCapturing(
-        'vi',
-        idConfig,
-      );
-      console.log('Id Result', idResult);
+      // const cardType = {
+      //   id: 'card_id',
+      //   name: 'card_name',
+      //   orientation: TVConst.Orientation.LANDSCAPE,
+      //   hasBackSide: true,
+      // };
+      // const idConfig = {
+      //   cardType: cardType,
+      //   isEnableSound: false,
+      //   isReadBothSide: true,
+      //   cardSide: TVConst.CardSide.FRONT,
+      // };
+      // console.log('Id Config', idConfig);
+      // const idResult = await RNTrustVisionRnsdkFramework.startIdCapturing(
+      //   idConfig,
+      //   'vi',
+      // );
+      // console.log('Id Result', idResult);
+      // ----------------------
 
       // selfie capturing
-      // const selfieConfig = {
-      //   cameraOption: TVConst.SelfieCameraMode.FRONT,
-      //   livenessMode: TVConst.LivenessMode.PASSIVE,
-      //   isEnableSound: false,
-      // };
-      // console.log('Selfie Config', selfieConfig);
-      // const selfieResult = await RNTrustVisionRnsdkFramework.startSelfieCapturing(
-      //   'vi',
-      //   selfieConfig,
-      // );
-      // console.log('Selfie Result', selfieResult);
+      const selfieConfig = {
+        cameraOption: TVConst.SelfieCameraMode.FRONT,
+        livenessMode: TVConst.LivenessMode.PASSIVE,
+        isEnableSound: false,
+      };
+      console.log('Selfie Config', selfieConfig);
+      const selfieResult = await RNTrustVisionRnsdkFramework.startSelfieCapturing(
+        selfieConfig,
+        'vi',
+      );
+      console.log('Selfie Result', selfieResult);
     } catch (e) {
       console.log('Error: ', e.code, ' - ', e.message);
     }
