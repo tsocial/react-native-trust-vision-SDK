@@ -24,7 +24,7 @@ import com.trustingsocial.tvsdk.external.TVSDKCallback;
 import com.trustingsocial.tvsdk.external.TVSDKConfiguration;
 import com.trustingsocial.tvsdk.external.TVSelfieConfiguration;
 import com.trustingsocial.tvsdk.external.TVTransactionData;
-import com.trustingsocial.tvsdk.internal.TVCardType;
+import com.trustingsocial.tvsdk.external.TVCardType;
 import com.trustingsocial.tvsdk.internal.TrustVisionSDK;
 
 import java.util.List;

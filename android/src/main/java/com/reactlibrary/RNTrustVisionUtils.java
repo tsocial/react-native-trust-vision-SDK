@@ -17,7 +17,7 @@ import com.trustingsocial.tvsdk.external.TVSDKConfiguration.TVActionMode;
 import com.trustingsocial.tvsdk.external.TVSDKConfiguration.TVLivenessMode;
 import com.trustingsocial.tvsdk.external.TVSDKUtil;
 import com.trustingsocial.tvsdk.external.TVSelfieConfiguration;
-import com.trustingsocial.tvsdk.internal.TVCardType;
+import com.trustingsocial.tvsdk.external.TVCardType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
