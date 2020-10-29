@@ -37,7 +37,8 @@ const App: () => React$Node = () => {
         '5767c20d-87aa-4cad-8dbb-f5429f76c34b',
         'c1446919-e60a-4575-a05d-304318212a1b',
         null,
-        true,
+        null,
+        true
       );
       const cardTypes = await RNTrustVisionRnsdkFramework.getCardTypes();
       console.log('Card type list', cardTypes)
@@ -56,7 +57,7 @@ const App: () => React$Node = () => {
 
       // Selfie Capturing
       const config = {
-        cameraOption: TVConst.SelfieCameraMode.BOTH,
+        cameraOption: TVConst.SelfieCameraMode.FRONT,
         isEnableSound: true,
         isEnableSanityCheck: true,
         livenessMode: TVConst.LivenessMode.HYBRID,
