@@ -61,6 +61,7 @@ const App: () => React$Node = () => {
         isEnableSound: true,
         isEnableSanityCheck: true,
         livenessMode: TVConst.LivenessMode.HYBRID,
+        skipConfirmScreen: true
       };
       console.log('Config', config);
       const result = await RNTrustVisionRnsdkFramework.startSelfieCapturing(config);

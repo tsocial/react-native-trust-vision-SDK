@@ -217,15 +217,16 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNTrustVisionRnsdkFramework (1.0.11):
+  - RNTrustVisionRnsdkFramework (1.0.17-msb):
     - React
-    - TrustVisionSDKFramework (~> 1.0.10)
+    - TensorFlowLiteSwift (~> 2.2.0)
+    - TrustVisionSDKFramework (= 1.0.17-msb)
   - TensorFlowLiteC (2.2.0)
   - TensorFlowLiteSwift (2.2.0):
     - TensorFlowLiteC (= 2.2.0)
-  - TrustVisionAPIFramework (1.0.8)
-  - TrustVisionSDKFramework (1.0.10):
-    - TrustVisionAPIFramework (~> 1.0.8)
+  - TrustVisionAPIFramework (1.0.16-msb)
+  - TrustVisionSDKFramework (1.0.17-msb):
+    - TrustVisionAPIFramework (= 1.0.16-msb)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -262,12 +263,12 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - TensorFlowLiteC
+    - TensorFlowLiteSwift
   https://github.com/tsocial/TrustVisionPodspec:
     - TrustVisionAPIFramework
     - TrustVisionSDKFramework
-  trunk:
-    - TensorFlowLiteC
-    - TensorFlowLiteSwift
 
 EXTERNAL SOURCES:
   boost-for-react-native:
@@ -351,11 +352,11 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNTrustVisionRnsdkFramework: a10bca85be56cd3c56833767c3678d834e7c3800
+  RNTrustVisionRnsdkFramework: 31f44464ae5f5bbe8b45628253c1101f8438f773
   TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
   TensorFlowLiteSwift: 2dd5e9c895e1819501f0fba3d8b69a536bda6c65
-  TrustVisionAPIFramework: 7d9bb5812ded7134119bee70724754340accdf7d
-  TrustVisionSDKFramework: 59e9e35d8220dcc50a02a8af9c0f7335038a3c3e
+  TrustVisionAPIFramework: aa5a9f33fa116637affe2d987f33e5f7b435b0ca
+  TrustVisionSDKFramework: 255cf948aec62e2cbb9fe61538dc50420d7e449a
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
 PODFILE CHECKSUM: 7420ba93af970f7407f8657be6d1c114ea8a8469
