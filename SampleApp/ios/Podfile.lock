@@ -217,16 +217,16 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNTrustVisionRnsdkFramework (1.0.17-msb):
+  - RNTrustVisionRnsdkFramework (1.0.18-msb):
     - React
     - TensorFlowLiteSwift (~> 2.2.0)
-    - TrustVisionSDKFramework (= 1.0.17-msb)
+    - TrustVisionSDKFramework (= 1.0.18-msb)
   - TensorFlowLiteC (2.2.0)
   - TensorFlowLiteSwift (2.2.0):
     - TensorFlowLiteC (= 2.2.0)
-  - TrustVisionAPIFramework (1.0.16-msb)
-  - TrustVisionSDKFramework (1.0.17-msb):
-    - TrustVisionAPIFramework (= 1.0.16-msb)
+  - TrustVisionAPIFramework (1.0.17-msb)
+  - TrustVisionSDKFramework (1.0.18-msb):
+    - TrustVisionAPIFramework (= 1.0.17-msb)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -352,11 +352,11 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNTrustVisionRnsdkFramework: 31f44464ae5f5bbe8b45628253c1101f8438f773
+  RNTrustVisionRnsdkFramework: e8729deff871efd738d6d0050c6cf6ec8e4267ef
   TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
   TensorFlowLiteSwift: 2dd5e9c895e1819501f0fba3d8b69a536bda6c65
-  TrustVisionAPIFramework: aa5a9f33fa116637affe2d987f33e5f7b435b0ca
-  TrustVisionSDKFramework: 255cf948aec62e2cbb9fe61538dc50420d7e449a
+  TrustVisionAPIFramework: 58784b843d464ee5a7afbeb791e6c1c8f30faf1b
+  TrustVisionSDKFramework: c6b5e4b02b19fe1ce7839fd095a103e7e3270d4a
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
 PODFILE CHECKSUM: 7420ba93af970f7407f8657be6d1c114ea8a8469
