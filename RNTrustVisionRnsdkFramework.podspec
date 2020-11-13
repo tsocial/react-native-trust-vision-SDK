@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "RNTrustVisionRnsdkFramework"
-  s.version      = "1.0.14-vib"
+  s.version      = "1.0.15-vib"
   s.summary      = "RNTrustVisionRnsdkFramework"
   s.description  = <<-DESC
                   RNTrustVisionRnsdkFramework
@@ -16,8 +16,13 @@ Pod::Spec.new do |s|
   s.source_files  = "ios/**/*.{h,m}"
   s.requires_arc = true
 
+  s.resources = ['ios/Frameworks/TrustVisionSDK.framework/TrustVisionSDK.bundle']
+  s.vendored_frameworks = [
+      'ios/Frameworks/TrustVisionSDK.framework'
+  ]
+
 
   s.dependency "React"
-  s.dependency 'TrustVisionSDKFramework', '1.0.14-vib'
+  s.dependency 'TensorFlowLiteSwift', '~> 2.2.0'
 
 end

@@ -217,12 +217,12 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNTrustVisionRnsdkFramework (1.0.11):
+  - RNTrustVisionRnsdkFramework (1.0.20-msb):
     - React
-    - TrustVisionSDKFramework (~> 1.0.10)
-  - TrustVisionAPIFramework (1.0.8)
-  - TrustVisionSDKFramework (1.0.10):
-    - TrustVisionAPIFramework (~> 1.0.8)
+    - TensorFlowLiteSwift (~> 2.2.0)
+  - TensorFlowLiteC (2.2.0)
+  - TensorFlowLiteSwift (2.2.0):
+    - TensorFlowLiteC (= 2.2.0)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -255,12 +255,13 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNTrustVisionRnsdkFramework (from `../node_modules/react-native-trust-vision-SDK`)
+  - TensorFlowLiteSwift (~> 2.2.0)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/tsocial/TrustVisionPodspec:
-    - TrustVisionAPIFramework
-    - TrustVisionSDKFramework
+  https://github.com/CocoaPods/Specs.git:
+    - TensorFlowLiteC
+    - TensorFlowLiteSwift
 
 EXTERNAL SOURCES:
   boost-for-react-native:
@@ -344,11 +345,11 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNTrustVisionRnsdkFramework: ad1f55e43da23c954b4d6f3b37235fb7673ddde2
-  TrustVisionAPIFramework: 7d9bb5812ded7134119bee70724754340accdf7d
-  TrustVisionSDKFramework: 59e9e35d8220dcc50a02a8af9c0f7335038a3c3e
+  RNTrustVisionRnsdkFramework: 927354e2db61f61abbbc1f2236afc1ad176764d5
+  TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
+  TensorFlowLiteSwift: 2dd5e9c895e1819501f0fba3d8b69a536bda6c65
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 5b076545c84fde7ffb5d8da15d694ac5161b1808
+PODFILE CHECKSUM: 2c100cc7e8619c341cd3d00203e1ab7370e05172
 
 COCOAPODS: 1.9.3
