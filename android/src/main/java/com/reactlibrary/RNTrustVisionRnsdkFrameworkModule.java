@@ -12,11 +12,13 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
-import com.trustingsocial.tvsdk.TVCaptureError;
-import com.trustingsocial.tvsdk.TVCapturingCallBack;
-import com.trustingsocial.tvsdk.TVIDConfiguration;
-import com.trustingsocial.tvsdk.TVSelfieCapturingCallback;
-import com.trustingsocial.tvsdk.TVSelfieConfiguration;
+import com.trustingsocial.tvsdk.external.TVCaptureError;
+import com.trustingsocial.tvsdk.external.TVCapturingCallBack;
+import com.trustingsocial.tvsdk.external.TVEncryptedImage;
+import com.trustingsocial.tvsdk.external.TVGestureImage;
+import com.trustingsocial.tvsdk.external.TVIDConfiguration;
+import com.trustingsocial.tvsdk.external.TVSelfieCapturingCallback;
+import com.trustingsocial.tvsdk.external.TVSelfieConfiguration;
 import com.trustingsocial.tvsdk.internal.TrustVisionSDK;
 
 import java.util.List;
@@ -48,9 +50,9 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
 
                 @Override
-                public void onSuccess(Bitmap bitmap, Bitmap bitmap1) {
+                public void onSuccess(TVEncryptedImage tvEncryptedImage, TVEncryptedImage tvEncryptedImage1) {
                     try {
-                        promise.resolve(convertResult(bitmap, bitmap1));
+                        promise.resolve(convertResult(tvEncryptedImage.getRawImage(), tvEncryptedImage1.getRawImage()));
                     } catch (Exception e) {
                         promise.reject(INTERNAL_ERROR, "Parse result error");
                     }
@@ -77,7 +79,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 }
 
                 @Override
-                public void onSuccess(List<Bitmap> list) {
+                public void onSuccess(List<TVGestureImage> list) {
                     try {
                         promise.resolve(convertResult(list));
                     } catch (Exception e) {
@@ -106,16 +108,28 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         return result;
     }
 
-    private WritableMap convertResult(List<Bitmap> bitmapList) throws Exception {
+    private WritableMap convertResult(List<TVGestureImage> bitmapList) throws Exception {
         WritableMap result = new WritableNativeMap();
         WritableArray bitmapArray = new WritableNativeArray();
-        for (Bitmap bitmap: bitmapList) {
-            if (bitmap != null) {
-                bitmapArray.pushString(RNTrustVisionUtils.convertBitmapToBase64(bitmap));
+        for (TVGestureImage gestureImage: bitmapList) {
+            if (gestureImage != null) {
+                WritableMap selfieImageMap = new WritableNativeMap();
+                selfieImageMap.putString("gesture_type", gestureImage.getGestureType().toString());
+                selfieImageMap.putMap("frontal_image", convertTvEncryptedImage(gestureImage.getFrontalImage()));
+                selfieImageMap.putMap("gesture_image", convertTvEncryptedImage(gestureImage.getGestureImage()));
+                bitmapArray.pushMap(selfieImageMap);
             }
         }
         result.putArray("selfie_images", bitmapArray);
 
+        return result;
+    }
+
+    private WritableMap convertTvEncryptedImage(TVEncryptedImage encryptedImage) {
+        if (encryptedImage == null) { return null; }
+        WritableMap result = new WritableNativeMap();
+        Bitmap rawBitmap = encryptedImage.getRawImage();
+        result.putString("raw_image_base64", RNTrustVisionUtils.convertBitmapToBase64(rawBitmap));
         return result;
     }
 }

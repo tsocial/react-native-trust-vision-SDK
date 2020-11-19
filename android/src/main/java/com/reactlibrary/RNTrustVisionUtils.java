@@ -8,12 +8,12 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
-import com.trustingsocial.tvsdk.TVIDConfiguration;
-import com.trustingsocial.tvsdk.TVSDKConfiguration;
-import com.trustingsocial.tvsdk.TVSDKConfiguration.TVLivenessMode;
-import com.trustingsocial.tvsdk.TVSDKUtil;
-import com.trustingsocial.tvsdk.TVSelfieConfiguration;
-import com.trustingsocial.tvsdk.internal.TVCardType;
+import com.trustingsocial.tvsdk.external.TVIDConfiguration;
+import com.trustingsocial.tvsdk.external.TVSDKConfiguration;
+import com.trustingsocial.tvsdk.external.TVSDKConfiguration.TVLivenessMode;
+import com.trustingsocial.tvsdk.external.TVSDKUtil;
+import com.trustingsocial.tvsdk.external.TVSelfieConfiguration;
+import com.trustingsocial.tvsdk.external.TVCardType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
