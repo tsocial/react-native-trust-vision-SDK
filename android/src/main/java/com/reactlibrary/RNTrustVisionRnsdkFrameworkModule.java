@@ -52,7 +52,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
                 @Override
                 public void onSuccess(TVEncryptedImage tvEncryptedImage, TVEncryptedImage tvEncryptedImage1) {
                     try {
-                        promise.resolve(convertResult(tvEncryptedImage.getRawImage(), tvEncryptedImage1.getRawImage()));
+                        promise.resolve(convertResult(tvEncryptedImage, tvEncryptedImage1));
                     } catch (Exception e) {
                         promise.reject(INTERNAL_ERROR, "Parse result error");
                     }
@@ -97,13 +97,13 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         }
     }
 
-    private WritableMap convertResult(Bitmap bitmap, Bitmap bitmap1) throws Exception {
+    private WritableMap convertResult(TVEncryptedImage bitmap, TVEncryptedImage bitmap1) throws Exception {
         WritableMap result = new WritableNativeMap();
         if (bitmap != null) {
-            result.putString("id_front_image", RNTrustVisionUtils.convertBitmapToBase64(bitmap));
+            result.putMap("id_front_image", convertTvEncryptedImage(bitmap));
         }
         if (bitmap1 != null) {
-            result.putString("id_back_image", RNTrustVisionUtils.convertBitmapToBase64(bitmap1));
+            result.putMap("id_back_image", convertTvEncryptedImage(bitmap1));
         }
         return result;
     }
