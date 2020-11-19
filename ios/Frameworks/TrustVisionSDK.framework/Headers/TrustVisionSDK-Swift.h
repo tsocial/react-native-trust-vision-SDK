@@ -281,15 +281,26 @@ typedef SWIFT_ENUM(NSInteger, CardOrientation, closed) {
   CardOrientationPortrait = 1,
 };
 
-@class UIImage;
+@class TVGestureImage;
+@class TVEncryptedImage;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK17TVDetectionResult")
 @interface TVDetectionResult : NSObject
-@property (nonatomic, copy) NSArray<UIImage *> * _Nonnull selfieImages;
+@property (nonatomic, copy) NSArray<TVGestureImage *> * _Nonnull selfieImages;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable frontIdImage;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable backIdImage;
 @property (nonatomic) BOOL isLive;
-@property (nonatomic, strong) UIImage * _Nullable frontIdImage;
-@property (nonatomic, strong) UIImage * _Nullable backIdImage;
 - (NSDictionary<NSString *, id> * _Nullable)toDictionary SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class UIImage;
+
+SWIFT_CLASS("_TtC14TrustVisionSDK16TVEncryptedImage")
+@interface TVEncryptedImage : NSObject
+@property (nonatomic, strong) UIImage * _Nullable rawImage;
+@property (nonatomic, copy) NSString * _Nullable encryptedImageHexString;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -302,6 +313,25 @@ SWIFT_CLASS("_TtC14TrustVisionSDK7TVError")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+enum GestureType : NSInteger;
+
+SWIFT_CLASS("_TtC14TrustVisionSDK14TVGestureImage")
+@interface TVGestureImage : NSObject
+@property (nonatomic) enum GestureType gestureType;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable frontalImage;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable gestureImage;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, GestureType, closed) {
+  GestureTypeUp = 0,
+  GestureTypeDown = 1,
+  GestureTypeLeft = 2,
+  GestureTypeRight = 3,
+  GestureTypeFrontal = 4,
+};
 
 
 SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
@@ -359,6 +389,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK33TVLivenessDetectionViewController")
 typedef SWIFT_ENUM(NSInteger, TVLivenessOption, closed) {
   TVLivenessOptionActive = 0,
   TVLivenessOptionPassive = 1,
+  TVLivenessOptionHybrid = 2,
 };
 
 
@@ -431,6 +462,8 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 + (UINavigationController * _Nonnull)startSelfieCapturingWithLanguageCode:(NSString * _Nullable)languageCode configuration:(TVSelfieConfiguration * _Nonnull)configuration success:(void (^ _Nonnull)(TVDetectionResult * _Nonnull))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure cancellation:(void (^ _Nonnull)(void))cancellation SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+
 
 
 
@@ -735,15 +768,26 @@ typedef SWIFT_ENUM(NSInteger, CardOrientation, closed) {
   CardOrientationPortrait = 1,
 };
 
-@class UIImage;
+@class TVGestureImage;
+@class TVEncryptedImage;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK17TVDetectionResult")
 @interface TVDetectionResult : NSObject
-@property (nonatomic, copy) NSArray<UIImage *> * _Nonnull selfieImages;
+@property (nonatomic, copy) NSArray<TVGestureImage *> * _Nonnull selfieImages;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable frontIdImage;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable backIdImage;
 @property (nonatomic) BOOL isLive;
-@property (nonatomic, strong) UIImage * _Nullable frontIdImage;
-@property (nonatomic, strong) UIImage * _Nullable backIdImage;
 - (NSDictionary<NSString *, id> * _Nullable)toDictionary SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class UIImage;
+
+SWIFT_CLASS("_TtC14TrustVisionSDK16TVEncryptedImage")
+@interface TVEncryptedImage : NSObject
+@property (nonatomic, strong) UIImage * _Nullable rawImage;
+@property (nonatomic, copy) NSString * _Nullable encryptedImageHexString;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -756,6 +800,25 @@ SWIFT_CLASS("_TtC14TrustVisionSDK7TVError")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+enum GestureType : NSInteger;
+
+SWIFT_CLASS("_TtC14TrustVisionSDK14TVGestureImage")
+@interface TVGestureImage : NSObject
+@property (nonatomic) enum GestureType gestureType;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable frontalImage;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable gestureImage;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, GestureType, closed) {
+  GestureTypeUp = 0,
+  GestureTypeDown = 1,
+  GestureTypeLeft = 2,
+  GestureTypeRight = 3,
+  GestureTypeFrontal = 4,
+};
 
 
 SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
@@ -813,6 +876,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK33TVLivenessDetectionViewController")
 typedef SWIFT_ENUM(NSInteger, TVLivenessOption, closed) {
   TVLivenessOptionActive = 0,
   TVLivenessOptionPassive = 1,
+  TVLivenessOptionHybrid = 2,
 };
 
 
@@ -885,6 +949,8 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 + (UINavigationController * _Nonnull)startSelfieCapturingWithLanguageCode:(NSString * _Nullable)languageCode configuration:(TVSelfieConfiguration * _Nonnull)configuration success:(void (^ _Nonnull)(TVDetectionResult * _Nonnull))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure cancellation:(void (^ _Nonnull)(void))cancellation SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+
 
 
 
@@ -1192,15 +1258,26 @@ typedef SWIFT_ENUM(NSInteger, CardOrientation, closed) {
   CardOrientationPortrait = 1,
 };
 
-@class UIImage;
+@class TVGestureImage;
+@class TVEncryptedImage;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK17TVDetectionResult")
 @interface TVDetectionResult : NSObject
-@property (nonatomic, copy) NSArray<UIImage *> * _Nonnull selfieImages;
+@property (nonatomic, copy) NSArray<TVGestureImage *> * _Nonnull selfieImages;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable frontIdImage;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable backIdImage;
 @property (nonatomic) BOOL isLive;
-@property (nonatomic, strong) UIImage * _Nullable frontIdImage;
-@property (nonatomic, strong) UIImage * _Nullable backIdImage;
 - (NSDictionary<NSString *, id> * _Nullable)toDictionary SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class UIImage;
+
+SWIFT_CLASS("_TtC14TrustVisionSDK16TVEncryptedImage")
+@interface TVEncryptedImage : NSObject
+@property (nonatomic, strong) UIImage * _Nullable rawImage;
+@property (nonatomic, copy) NSString * _Nullable encryptedImageHexString;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1213,6 +1290,25 @@ SWIFT_CLASS("_TtC14TrustVisionSDK7TVError")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+enum GestureType : NSInteger;
+
+SWIFT_CLASS("_TtC14TrustVisionSDK14TVGestureImage")
+@interface TVGestureImage : NSObject
+@property (nonatomic) enum GestureType gestureType;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable frontalImage;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable gestureImage;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, GestureType, closed) {
+  GestureTypeUp = 0,
+  GestureTypeDown = 1,
+  GestureTypeLeft = 2,
+  GestureTypeRight = 3,
+  GestureTypeFrontal = 4,
+};
 
 
 SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
@@ -1270,6 +1366,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK33TVLivenessDetectionViewController")
 typedef SWIFT_ENUM(NSInteger, TVLivenessOption, closed) {
   TVLivenessOptionActive = 0,
   TVLivenessOptionPassive = 1,
+  TVLivenessOptionHybrid = 2,
 };
 
 
@@ -1342,6 +1439,8 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 + (UINavigationController * _Nonnull)startSelfieCapturingWithLanguageCode:(NSString * _Nullable)languageCode configuration:(TVSelfieConfiguration * _Nonnull)configuration success:(void (^ _Nonnull)(TVDetectionResult * _Nonnull))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure cancellation:(void (^ _Nonnull)(void))cancellation SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+
 
 
 
@@ -1646,15 +1745,26 @@ typedef SWIFT_ENUM(NSInteger, CardOrientation, closed) {
   CardOrientationPortrait = 1,
 };
 
-@class UIImage;
+@class TVGestureImage;
+@class TVEncryptedImage;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK17TVDetectionResult")
 @interface TVDetectionResult : NSObject
-@property (nonatomic, copy) NSArray<UIImage *> * _Nonnull selfieImages;
+@property (nonatomic, copy) NSArray<TVGestureImage *> * _Nonnull selfieImages;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable frontIdImage;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable backIdImage;
 @property (nonatomic) BOOL isLive;
-@property (nonatomic, strong) UIImage * _Nullable frontIdImage;
-@property (nonatomic, strong) UIImage * _Nullable backIdImage;
 - (NSDictionary<NSString *, id> * _Nullable)toDictionary SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class UIImage;
+
+SWIFT_CLASS("_TtC14TrustVisionSDK16TVEncryptedImage")
+@interface TVEncryptedImage : NSObject
+@property (nonatomic, strong) UIImage * _Nullable rawImage;
+@property (nonatomic, copy) NSString * _Nullable encryptedImageHexString;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1667,6 +1777,25 @@ SWIFT_CLASS("_TtC14TrustVisionSDK7TVError")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+enum GestureType : NSInteger;
+
+SWIFT_CLASS("_TtC14TrustVisionSDK14TVGestureImage")
+@interface TVGestureImage : NSObject
+@property (nonatomic) enum GestureType gestureType;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable frontalImage;
+@property (nonatomic, strong) TVEncryptedImage * _Nullable gestureImage;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, GestureType, closed) {
+  GestureTypeUp = 0,
+  GestureTypeDown = 1,
+  GestureTypeLeft = 2,
+  GestureTypeRight = 3,
+  GestureTypeFrontal = 4,
+};
 
 
 SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
@@ -1724,6 +1853,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK33TVLivenessDetectionViewController")
 typedef SWIFT_ENUM(NSInteger, TVLivenessOption, closed) {
   TVLivenessOptionActive = 0,
   TVLivenessOptionPassive = 1,
+  TVLivenessOptionHybrid = 2,
 };
 
 
@@ -1796,6 +1926,8 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 + (UINavigationController * _Nonnull)startSelfieCapturingWithLanguageCode:(NSString * _Nullable)languageCode configuration:(TVSelfieConfiguration * _Nonnull)configuration success:(void (^ _Nonnull)(TVDetectionResult * _Nonnull))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure cancellation:(void (^ _Nonnull)(void))cancellation SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+
 
 
 
