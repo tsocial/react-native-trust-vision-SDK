@@ -100,10 +100,10 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
     private WritableMap convertResult(TVEncryptedImage bitmap, TVEncryptedImage bitmap1) throws Exception {
         WritableMap result = new WritableNativeMap();
         if (bitmap != null) {
-            result.putMap("id_front_image", convertTvEncryptedImage(bitmap));
+            result.putMap("front_id_image", convertTvEncryptedImage(bitmap));
         }
         if (bitmap1 != null) {
-            result.putMap("id_back_image", convertTvEncryptedImage(bitmap1));
+            result.putMap("back_id_image", convertTvEncryptedImage(bitmap1));
         }
         return result;
     }
