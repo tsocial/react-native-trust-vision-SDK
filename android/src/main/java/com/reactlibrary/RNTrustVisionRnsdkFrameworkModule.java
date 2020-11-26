@@ -129,6 +129,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         if (encryptedImage == null) { return null; }
         WritableMap result = new WritableNativeMap();
         Bitmap rawBitmap = encryptedImage.getRawImage();
+        if (rawBitmap == null) { return null; }
         result.putString("raw_image_base64", RNTrustVisionUtils.convertBitmapToBase64(rawBitmap));
         return result;
     }
