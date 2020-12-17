@@ -48,8 +48,8 @@ const App: () => React$Node = () => {
       };
       console.log('Id Config', idConfig);
       const idResult = await RNTrustVisionRnsdkFramework.startIdCapturing(
-        'vi',
         idConfig,
+        'vi',
       );
       console.log('Id Result', idResult);
 
