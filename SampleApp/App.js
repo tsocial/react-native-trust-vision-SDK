@@ -56,26 +56,26 @@ const App: () => React$Node = () => {
       // const result = await RNTrustVisionRnsdkFramework.startFlow(config);
 
       // Selfie Capturing
-      const config = {
-        cameraOption: TVConst.SelfieCameraMode.FRONT,
-        isEnableSound: true,
-        isEnableSanityCheck: true,
-        livenessMode: TVConst.LivenessMode.HYBRID,
-        skipConfirmScreen: true
-      };
-      console.log('Config', config);
-      const result = await RNTrustVisionRnsdkFramework.startSelfieCapturing(config);
-
-      // Id capturing
       // const config = {
-      //   cardType: cardTypes[0],
-      //   cardSide: TVConst.CardSide.BACK,
+      //   cameraOption: TVConst.SelfieCameraMode.FRONT,
       //   isEnableSound: true,
       //   isEnableSanityCheck: true,
-      //   isReadBothSide: true
+      //   livenessMode: TVConst.LivenessMode.HYBRID,
+      //   skipConfirmScreen: true
       // };
       // console.log('Config', config);
-      // const result = await RNTrustVisionRnsdkFramework.startIdCapturing(config);
+      // const result = await RNTrustVisionRnsdkFramework.startSelfieCapturing(config);
+
+      // Id capturing
+      const config = {
+        cardType: cardTypes[0],
+        cardSide: TVConst.CardSide.FRONT,
+        isEnableSound: true,
+        isEnableSanityCheck: true,
+        isReadBothSide: false
+      };
+      console.log('Config', config);
+      const result = await RNTrustVisionRnsdkFramework.startIdCapturing(config);
 
       console.log('Result', result);
 

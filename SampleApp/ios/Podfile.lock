@@ -217,7 +217,7 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNTrustVisionRnsdkFramework (1.0.20-msb):
+  - RNTrustVisionRnsdkFramework (1.0.21-msb):
     - React
     - TensorFlowLiteSwift (~> 2.2.0)
   - TensorFlowLiteC (2.2.0)
@@ -345,7 +345,7 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNTrustVisionRnsdkFramework: 927354e2db61f61abbbc1f2236afc1ad176764d5
+  RNTrustVisionRnsdkFramework: d59dcf8ba495d4e8ba0d8f34104b4b3ff467db17
   TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
   TensorFlowLiteSwift: 2dd5e9c895e1819501f0fba3d8b69a536bda6c65
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
