@@ -23,6 +23,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -270,10 +275,32 @@ class RNTrustVisionUtils {
     static String loadBase64Image(String imageUrl) {
         if (imageUrl == null) return null;
         try {
-            Bitmap bitmap = TVSDKUtil.loadImageFromStorage(imageUrl);
-            byte[] byteArray = TVSDKUtil.toByteArray(bitmap);
+            byte[] byteArray = readBytes(imageUrl);
+
+//            Bitmap bitmap = TVSDKUtil.loadImageFromStorage(imageUrl);
+//            byte[] byteArray = TVSDKUtil.toByteArray(bitmap);
             return Base64.encodeToString(byteArray, Base64.NO_WRAP);
         } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    static byte[] readBytes(String path) {
+        File file = new File(path);
+        int size = (int) file.length();
+        byte[] bytes = new byte[size];
+        try {
+            BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
+            buf.read(bytes, 0, bytes.length);
+            buf.close();
+            return bytes;
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
             return null;
         }
     }
