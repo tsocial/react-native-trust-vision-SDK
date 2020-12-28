@@ -16,9 +16,13 @@ Pod::Spec.new do |s|
   s.source_files  = "ios/**/*.{h,m}"
   s.requires_arc = true
 
+  s.resources = ['ios/Frameworks/TrustVisionSDK.framework/TrustVisionSDK.bundle']
+  s.vendored_frameworks = [
+      'ios/Frameworks/TrustVisionSDK.framework',
+      'ios/Frameworks/TrustVisionAPI.framework'
+  ]
 
   s.dependency "React"
   s.dependency 'TensorFlowLiteSwift', '~> 2.2.0'
-  s.dependency 'TrustVisionSDKFramework', '1.0.15-mafc'
 
 end

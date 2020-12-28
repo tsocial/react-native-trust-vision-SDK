@@ -490,15 +490,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SampleApp/Pods-SampleApp-resources.sh",
-				"${PODS_ROOT}/TrustVisionSDKFramework/TrustVisionSDKFramework/TrustVisionSDKFramework/Frameworks/TrustVisionSDK.framework/TrustVisionSDK.bundle",
+				"${PODS_ROOT}/../../node_modules/react-native-trust-vision-SDK/ios/Frameworks/TrustVisionSDK.framework/TrustVisionSDK.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TrustVisionSDK.bundle",
 			);
