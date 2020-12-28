@@ -16,6 +16,7 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.trustingsocial.apisdk.TVApi;
 import com.trustingsocial.apisdk.data.TVApiError;
 import com.trustingsocial.apisdk.data.TVCallback;
+import com.trustingsocial.apisdk.data.TVEmptyException;
 import com.trustingsocial.tvsdk.TVCapturingCallBack;
 import com.trustingsocial.tvsdk.TVDetectionError;
 import com.trustingsocial.tvsdk.TVDetectionResult;
@@ -63,7 +64,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
             }
         };
 
-        TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", listener);
+        try {
+            TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", listener);
+        } catch (TVEmptyException e) {
+            e.printStackTrace();
+        }
     }
 
     @ReactMethod
@@ -84,7 +89,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         if (TextUtils.isEmpty(accessKeyId) || TextUtils.isEmpty(accessKeySecret)) {
             TrustVisionSDK.init(activity, endpoint, "vi", listener);
         } else {
-            TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", listener);
+            try {
+                TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", listener);
+            } catch (TVEmptyException e) {
+                e.printStackTrace();
+            }
         }
     }
 

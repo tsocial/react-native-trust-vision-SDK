@@ -155,14 +155,6 @@ class RNTrustVisionUtils {
             configuration.setIdTamperingLevel(map.getString("idTamperingLevel"));
         }
 
-        if (map.hasKey("skipConfirmScreen")) {
-            configuration.setSkipConfirmScreen(map.getBoolean("skipConfirmScreen"));
-        }
-
-        if (map.hasKey("idCaptureOnlyMode")) {
-            configuration.setIdCaptureOnlyMode(map.getBoolean("idCaptureOnlyMode"));
-        }
-
         return configuration.build();
     }
 
@@ -200,14 +192,6 @@ class RNTrustVisionUtils {
             configuration.setIdTamperingLevel(map.getString("idTamperingLevel"));
         }
 
-        if (map.hasKey("skipConfirmScreen")) {
-            configuration.setSkipConfirmScreen(map.getBoolean("skipConfirmScreen"));
-        }
-
-        if (map.hasKey("idCaptureOnlyMode")) {
-            configuration.setIdCaptureOnlyMode(map.getBoolean("idCaptureOnlyMode"));
-        }
-
         return configuration.build();
     }
 
@@ -238,10 +222,6 @@ class RNTrustVisionUtils {
 
         if (map.hasKey("isEnableSanityCheck")) {
             configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
-        }
-
-        if (map.hasKey("skipConfirmScreen")) {
-            configuration.setSkipConfirmScreen(map.getBoolean("skipConfirmScreen"));
         }
 
         return configuration.build();
