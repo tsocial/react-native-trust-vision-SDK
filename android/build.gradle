@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation('com.trustvision:tv_sdk:1.0.26-ui-only@aar') {
+    implementation('com.trustvision:tv_sdk:1.0.27-ui-only@aar') {
         transitive = true
     }
 }
