@@ -10,19 +10,24 @@ import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.trustingsocial.apisdk.data.TVApiError;
 import com.trustingsocial.apisdk.utils.GsonUtils;
-import com.trustingsocial.tvsdk.TVDetectionError;
-import com.trustingsocial.tvsdk.TVIDConfiguration;
-import com.trustingsocial.tvsdk.TVSDKConfiguration;
-import com.trustingsocial.tvsdk.TVSDKConfiguration.TVActionMode;
-import com.trustingsocial.tvsdk.TVSDKConfiguration.TVLivenessMode;
-import com.trustingsocial.tvsdk.TVSDKUtil;
-import com.trustingsocial.tvsdk.TVSelfieConfiguration;
-import com.trustingsocial.tvsdk.internal.TVCardType;
+import com.trustingsocial.tvsdk.external.TVDetectionError;
+import com.trustingsocial.tvsdk.external.TVIDConfiguration;
+import com.trustingsocial.tvsdk.external.TVSDKConfiguration;
+import com.trustingsocial.tvsdk.external.TVSDKConfiguration.TVActionMode;
+import com.trustingsocial.tvsdk.external.TVSDKConfiguration.TVLivenessMode;
+import com.trustingsocial.tvsdk.external.TVSDKUtil;
+import com.trustingsocial.tvsdk.external.TVSelfieConfiguration;
+import com.trustingsocial.tvsdk.external.TVCardType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -155,6 +160,14 @@ class RNTrustVisionUtils {
             configuration.setIdTamperingLevel(map.getString("idTamperingLevel"));
         }
 
+        if (map.hasKey("skipConfirmScreen")) {
+            configuration.setSkipConfirmScreen(map.getBoolean("skipConfirmScreen"));
+        }
+
+        if (map.hasKey("idCaptureOnlyMode")) {
+            configuration.setIdCaptureOnlyMode(map.getBoolean("idCaptureOnlyMode"));
+        }
+
         return configuration.build();
     }
 
@@ -192,6 +205,14 @@ class RNTrustVisionUtils {
             configuration.setIdTamperingLevel(map.getString("idTamperingLevel"));
         }
 
+        if (map.hasKey("skipConfirmScreen")) {
+            configuration.setSkipConfirmScreen(map.getBoolean("skipConfirmScreen"));
+        }
+
+        if (map.hasKey("idCaptureOnlyMode")) {
+            configuration.setIdCaptureOnlyMode(map.getBoolean("idCaptureOnlyMode"));
+        }
+
         return configuration.build();
     }
 
@@ -224,6 +245,10 @@ class RNTrustVisionUtils {
             configuration.setEnableSanityCheck(map.getBoolean("isEnableSanityCheck"));
         }
 
+        if (map.hasKey("skipConfirmScreen")) {
+            configuration.setSkipConfirmScreen(map.getBoolean("skipConfirmScreen"));
+        }
+
         return configuration.build();
     }
 
@@ -250,10 +275,32 @@ class RNTrustVisionUtils {
     static String loadBase64Image(String imageUrl) {
         if (imageUrl == null) return null;
         try {
-            Bitmap bitmap = TVSDKUtil.loadImageFromStorage(imageUrl);
-            byte[] byteArray = TVSDKUtil.toByteArray(bitmap);
+            byte[] byteArray = readBytes(imageUrl);
+
+//            Bitmap bitmap = TVSDKUtil.loadImageFromStorage(imageUrl);
+//            byte[] byteArray = TVSDKUtil.toByteArray(bitmap);
             return Base64.encodeToString(byteArray, Base64.NO_WRAP);
         } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    static byte[] readBytes(String path) {
+        File file = new File(path);
+        int size = (int) file.length();
+        byte[] bytes = new byte[size];
+        try {
+            BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
+            buf.read(bytes, 0, bytes.length);
+            buf.close();
+            return bytes;
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
             return null;
         }
     }

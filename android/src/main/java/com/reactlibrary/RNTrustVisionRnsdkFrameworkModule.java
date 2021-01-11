@@ -16,16 +16,15 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.trustingsocial.apisdk.TVApi;
 import com.trustingsocial.apisdk.data.TVApiError;
 import com.trustingsocial.apisdk.data.TVCallback;
-import com.trustingsocial.apisdk.data.TVEmptyException;
-import com.trustingsocial.tvsdk.TVCapturingCallBack;
-import com.trustingsocial.tvsdk.TVDetectionError;
-import com.trustingsocial.tvsdk.TVDetectionResult;
-import com.trustingsocial.tvsdk.TVIDConfiguration;
-import com.trustingsocial.tvsdk.TVSDKCallback;
-import com.trustingsocial.tvsdk.TVSDKConfiguration;
-import com.trustingsocial.tvsdk.TVSelfieConfiguration;
-import com.trustingsocial.tvsdk.TVTransactionData;
-import com.trustingsocial.tvsdk.internal.TVCardType;
+import com.trustingsocial.tvsdk.external.TVCapturingCallBack;
+import com.trustingsocial.tvsdk.external.TVDetectionError;
+import com.trustingsocial.tvsdk.external.TVDetectionResult;
+import com.trustingsocial.tvsdk.external.TVIDConfiguration;
+import com.trustingsocial.tvsdk.external.TVSDKCallback;
+import com.trustingsocial.tvsdk.external.TVSDKConfiguration;
+import com.trustingsocial.tvsdk.external.TVSelfieConfiguration;
+import com.trustingsocial.tvsdk.external.TVTransactionData;
+import com.trustingsocial.tvsdk.external.TVCardType;
 import com.trustingsocial.tvsdk.internal.TrustVisionSDK;
 
 import java.util.List;
@@ -50,7 +49,7 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
     }
 
     @ReactMethod
-    public void initialize(String accessKeyId, String accessKeySecret, String endpoint, Boolean isForce, final Promise promise) {
+    public void initialize(String accessKeyId, String accessKeySecret, String endpoint, String xRequestId, Boolean isForce, final Promise promise) {
         Activity activity = getCurrentActivity();
         TrustVisionSDK.TVInitializeListener listener = new TrustVisionSDK.TVInitializeListener() {
             @Override
@@ -64,15 +63,11 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
             }
         };
 
-        try {
-            TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", listener);
-        } catch (TVEmptyException e) {
-            e.printStackTrace();
-        }
+        TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", xRequestId, listener);
     }
 
     @ReactMethod
-    public void initialize(String accessKeyId, String accessKeySecret, String endpoint, final Promise promise) {
+    public void initialize(String accessKeyId, String accessKeySecret, String endpoint, String xRequestId, final Promise promise) {
         Activity activity = getCurrentActivity();
         TrustVisionSDK.TVInitializeListener listener = new TrustVisionSDK.TVInitializeListener() {
             @Override
@@ -87,13 +82,9 @@ public class RNTrustVisionRnsdkFrameworkModule extends ReactContextBaseJavaModul
         };
 
         if (TextUtils.isEmpty(accessKeyId) || TextUtils.isEmpty(accessKeySecret)) {
-            TrustVisionSDK.init(activity, endpoint, "vi", listener);
+            TrustVisionSDK.init(activity, endpoint, "vi", xRequestId, listener);
         } else {
-            try {
-                TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", listener);
-            } catch (TVEmptyException e) {
-                e.printStackTrace();
-            }
+            TrustVisionSDK.init(activity, endpoint, accessKeyId, accessKeySecret, "vi", xRequestId, listener);
         }
     }
 

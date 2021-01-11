@@ -37,12 +37,13 @@ const App: () => React$Node = () => {
         '5767c20d-87aa-4cad-8dbb-f5429f76c34b',
         'c1446919-e60a-4575-a05d-304318212a1b',
         null,
+        null,
         true,
       );
       const cardTypes = await RNTrustVisionRnsdkFramework.getCardTypes();
       console.log('Card type list', cardTypes)
 
-      // Full flow
+      // Full flows
       // const config = {
       //   cardType: cardTypes[0],
       //   cameraOption: TVConst.SelfieCameraMode.BACK,
