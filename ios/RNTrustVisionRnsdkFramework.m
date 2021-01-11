@@ -12,6 +12,7 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(initialize:(NSString *)accessKeyId
                   accessKeySecret:(NSString *)accessKeySecret
                   endpoint:(NSString *)endpoint
+                  xRequestId:(NSString *)xRequestId
                   isForce:(BOOL) isForce
                   withResolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
@@ -21,6 +22,7 @@ RCT_EXPORT_METHOD(initialize:(NSString *)accessKeyId
                                       baseUrl:endpoint
                             localizationFiles:NULL
                                  languageCode:@"vi"
+                                   xRequestId:xRequestId
                                      isForced:isForce
                                       success:^{
         resolve(@"Initialize TV framework done.");

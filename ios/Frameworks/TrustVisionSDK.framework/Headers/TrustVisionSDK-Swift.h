@@ -190,7 +190,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import AVFoundation;
 @import CoreGraphics;
+@import CoreMedia;
 @import Foundation;
 @import ObjectiveC;
 @import TrustVisionAPI;
@@ -228,12 +230,6 @@ typedef SWIFT_ENUM(NSInteger, LivenessOption, closed) {
   LivenessOptionHybrid = 2,
 };
 
-
-SWIFT_CLASS("_TtC14TrustVisionSDK11SoundPlayer")
-@interface SoundPlayer : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
 @class NSCoder;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK16TVViewController")
@@ -265,6 +261,29 @@ SWIFT_CLASS("_TtC14TrustVisionSDK15TVCameraPreview")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) Class _Nonnull layerClass;)
 + (Class _Nonnull)layerClass SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK12TVCameraView")
+@interface TVCameraView : UIView
+- (void)awakeFromNib;
+- (void)layoutSubviews;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class AVCaptureOutput;
+@class AVCaptureConnection;
+
+@interface TVCameraView (SWIFT_EXTENSION(TrustVisionSDK)) <AVCaptureVideoDataOutputSampleBufferDelegate>
+- (void)captureOutput:(AVCaptureOutput * _Nonnull)output didOutputSampleBuffer:(CMSampleBufferRef _Nonnull)sampleBuffer fromConnection:(AVCaptureConnection * _Nonnull)connection;
+@end
+
+@class AVCaptureMetadataOutput;
+@class AVMetadataObject;
+
+@interface TVCameraView (SWIFT_EXTENSION(TrustVisionSDK)) <AVCaptureMetadataOutputObjectsDelegate>
+- (void)captureOutput:(AVCaptureMetadataOutput * _Nonnull)output didOutputMetadataObjects:(NSArray<AVMetadataObject *> * _Nonnull)metadataObjects fromConnection:(AVCaptureConnection * _Nonnull)connection;
 @end
 
 @class CardInfo;
@@ -400,6 +419,9 @@ typedef SWIFT_ENUM(NSInteger, TVErrorCategory, closed) {
 
 SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
 @interface TVIDDetectionViewController : TVBaseDetectionViewController
+- (IBAction)skipButtonPressed:(id _Nonnull)sender;
+- (IBAction)captureButtonPressed:(id _Nonnull)sender;
+- (IBAction)closeButtonPressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
@@ -411,6 +433,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
 @class UIImagePickerController;
 
 @interface TVIDDetectionViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+- (IBAction)galleryButtonPressed:(id _Nonnull)sender;
 - (void)imagePickerController:(UIImagePickerController * _Nonnull)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey, id> * _Nonnull)info;
 @end
 
@@ -442,14 +465,29 @@ typedef SWIFT_ENUM(NSInteger, TVCardSide, closed) {
 };
 
 
+SWIFT_CLASS("_TtC14TrustVisionSDK17TVIdCardFrameView")
+@interface TVIdCardFrameView : UIView
+- (void)awakeFromNib;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+
 /// Camera View Controller
 /// Features: capture image, detech faces…
 SWIFT_CLASS("_TtC14TrustVisionSDK33TVLivenessDetectionViewController")
 @interface TVLivenessDetectionViewController : TVBaseDetectionViewController
+- (IBAction)flipCameraButtonPressed:(id _Nonnull)sender;
+- (IBAction)capturePressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidDisappear:(BOOL)animated;
+/// Handle event user presses close button
+/// \param sender button
+///
+- (IBAction)pressCloseButton:(id _Nonnull)sender;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -462,7 +500,17 @@ SWIFT_CLASS("_TtC14TrustVisionSDK16TVLivenessResult")
 @interface TVLivenessResult : TVBasePollingResult
 @property (nonatomic) float score;
 @property (nonatomic) BOOL isLive;
+@property (nonatomic, copy) NSString * _Nonnull verdict;
 + (TVLivenessResult * _Nullable)fromApiObjectWithApiLivenessResponse:(TVVerifyLivenessResponse * _Nullable)apiLivenessResponse SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK18TVLivenessStepView")
+@interface TVLivenessStepView : UIView
+- (void)awakeFromNib;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
 @end
 
 
@@ -476,6 +524,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK18TVLocalizationFile")
 
 SWIFT_CLASS("_TtC14TrustVisionSDK25TVQRScannerViewController")
 @interface TVQRScannerViewController : TVBaseDetectionViewController
+- (IBAction)closeButtonPressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
@@ -497,10 +546,27 @@ SWIFT_CLASS("_TtC14TrustVisionSDK7TVQrSdk")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+SWIFT_CLASS("_TtC14TrustVisionSDK12TVResultCell")
+@interface TVResultCell : UITableViewCell
+- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString * _Nullable)reuseIdentifier OBJC_DESIGNATED_INITIALIZER SWIFT_AVAILABILITY(ios,introduced=3.0);
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK16TVResultCellView")
+@interface TVResultCellView : UIView
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
 @protocol UIViewControllerTransitionCoordinator;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK22TVResultViewController")
 @interface TVResultViewController : UIViewController
+- (IBAction)infoButtonPressed:(id _Nonnull)sender;
+- (IBAction)backButtonPressed:(id _Nonnull)sender;
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator> _Nonnull)coordinator;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidLoad;
@@ -509,7 +575,6 @@ SWIFT_CLASS("_TtC14TrustVisionSDK22TVResultViewController")
 @end
 
 @class UITableView;
-@class UITableViewCell;
 
 @interface TVResultViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView * _Nonnull)tableView SWIFT_WARN_UNUSED_RESULT;
@@ -590,6 +655,13 @@ SWIFT_CLASS("_TtC14TrustVisionSDK21TVSelfieConfiguration")
 @end
 
 
+SWIFT_CLASS("_TtC14TrustVisionSDK19TVSelfieTimeoutView")
+@interface TVSelfieTimeoutView : UIView
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 @class UIPresentationController;
 
 @interface TVViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UIAdaptivePresentationControllerDelegate>
@@ -600,8 +672,8 @@ SWIFT_CLASS("_TtC14TrustVisionSDK21TVSelfieConfiguration")
 
 SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 @interface TrustVisionSdk : NSObject
-+ (void)initializeWithBaseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
-+ (void)initializeWithAccessKeyId:(NSString * _Nonnull)accessKeyId accessKeySecret:(NSString * _Nonnull)accessKeySecret baseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
++ (void)initializeWithBaseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode xRequestId:(NSString * _Nullable)xRequestId isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
++ (void)initializeWithAccessKeyId:(NSString * _Nonnull)accessKeyId accessKeySecret:(NSString * _Nonnull)accessKeySecret baseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode xRequestId:(NSString * _Nullable)xRequestId isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
 + (UINavigationController * _Nonnull)newCameraViewControllerWithConfig:(TVSDKConfig * _Nonnull)config success:(void (^ _Nonnull)(TVDetectionResult * _Nonnull))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure cancellation:(void (^ _Nonnull)(void))cancellation SWIFT_WARN_UNUSED_RESULT;
 + (NSArray<TVCardType *> * _Nonnull)getCardTypes SWIFT_WARN_UNUSED_RESULT;
 + (NSArray<NSString *> * _Nonnull)getLivenessOptions SWIFT_WARN_UNUSED_RESULT;
@@ -621,6 +693,9 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 
 
 
+@interface UIButton (SWIFT_EXTENSION(TrustVisionSDK))
+@property (nonatomic, copy) IBInspectable NSString * _Nullable xibLocKey;
+@end
 
 
 
@@ -633,6 +708,11 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 
 
 
+
+
+@interface UILabel (SWIFT_EXTENSION(TrustVisionSDK))
+@property (nonatomic, copy) IBInspectable NSString * _Nullable xibLocKey;
+@end
 
 
 
@@ -832,7 +912,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import AVFoundation;
 @import CoreGraphics;
+@import CoreMedia;
 @import Foundation;
 @import ObjectiveC;
 @import TrustVisionAPI;
@@ -870,12 +952,6 @@ typedef SWIFT_ENUM(NSInteger, LivenessOption, closed) {
   LivenessOptionHybrid = 2,
 };
 
-
-SWIFT_CLASS("_TtC14TrustVisionSDK11SoundPlayer")
-@interface SoundPlayer : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
 @class NSCoder;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK16TVViewController")
@@ -907,6 +983,29 @@ SWIFT_CLASS("_TtC14TrustVisionSDK15TVCameraPreview")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) Class _Nonnull layerClass;)
 + (Class _Nonnull)layerClass SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK12TVCameraView")
+@interface TVCameraView : UIView
+- (void)awakeFromNib;
+- (void)layoutSubviews;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class AVCaptureOutput;
+@class AVCaptureConnection;
+
+@interface TVCameraView (SWIFT_EXTENSION(TrustVisionSDK)) <AVCaptureVideoDataOutputSampleBufferDelegate>
+- (void)captureOutput:(AVCaptureOutput * _Nonnull)output didOutputSampleBuffer:(CMSampleBufferRef _Nonnull)sampleBuffer fromConnection:(AVCaptureConnection * _Nonnull)connection;
+@end
+
+@class AVCaptureMetadataOutput;
+@class AVMetadataObject;
+
+@interface TVCameraView (SWIFT_EXTENSION(TrustVisionSDK)) <AVCaptureMetadataOutputObjectsDelegate>
+- (void)captureOutput:(AVCaptureMetadataOutput * _Nonnull)output didOutputMetadataObjects:(NSArray<AVMetadataObject *> * _Nonnull)metadataObjects fromConnection:(AVCaptureConnection * _Nonnull)connection;
 @end
 
 @class CardInfo;
@@ -1042,6 +1141,9 @@ typedef SWIFT_ENUM(NSInteger, TVErrorCategory, closed) {
 
 SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
 @interface TVIDDetectionViewController : TVBaseDetectionViewController
+- (IBAction)skipButtonPressed:(id _Nonnull)sender;
+- (IBAction)captureButtonPressed:(id _Nonnull)sender;
+- (IBAction)closeButtonPressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
@@ -1053,6 +1155,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
 @class UIImagePickerController;
 
 @interface TVIDDetectionViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+- (IBAction)galleryButtonPressed:(id _Nonnull)sender;
 - (void)imagePickerController:(UIImagePickerController * _Nonnull)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey, id> * _Nonnull)info;
 @end
 
@@ -1084,14 +1187,29 @@ typedef SWIFT_ENUM(NSInteger, TVCardSide, closed) {
 };
 
 
+SWIFT_CLASS("_TtC14TrustVisionSDK17TVIdCardFrameView")
+@interface TVIdCardFrameView : UIView
+- (void)awakeFromNib;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+
 /// Camera View Controller
 /// Features: capture image, detech faces…
 SWIFT_CLASS("_TtC14TrustVisionSDK33TVLivenessDetectionViewController")
 @interface TVLivenessDetectionViewController : TVBaseDetectionViewController
+- (IBAction)flipCameraButtonPressed:(id _Nonnull)sender;
+- (IBAction)capturePressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidDisappear:(BOOL)animated;
+/// Handle event user presses close button
+/// \param sender button
+///
+- (IBAction)pressCloseButton:(id _Nonnull)sender;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -1104,7 +1222,17 @@ SWIFT_CLASS("_TtC14TrustVisionSDK16TVLivenessResult")
 @interface TVLivenessResult : TVBasePollingResult
 @property (nonatomic) float score;
 @property (nonatomic) BOOL isLive;
+@property (nonatomic, copy) NSString * _Nonnull verdict;
 + (TVLivenessResult * _Nullable)fromApiObjectWithApiLivenessResponse:(TVVerifyLivenessResponse * _Nullable)apiLivenessResponse SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK18TVLivenessStepView")
+@interface TVLivenessStepView : UIView
+- (void)awakeFromNib;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
 @end
 
 
@@ -1118,6 +1246,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK18TVLocalizationFile")
 
 SWIFT_CLASS("_TtC14TrustVisionSDK25TVQRScannerViewController")
 @interface TVQRScannerViewController : TVBaseDetectionViewController
+- (IBAction)closeButtonPressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
@@ -1139,10 +1268,27 @@ SWIFT_CLASS("_TtC14TrustVisionSDK7TVQrSdk")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+SWIFT_CLASS("_TtC14TrustVisionSDK12TVResultCell")
+@interface TVResultCell : UITableViewCell
+- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString * _Nullable)reuseIdentifier OBJC_DESIGNATED_INITIALIZER SWIFT_AVAILABILITY(ios,introduced=3.0);
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK16TVResultCellView")
+@interface TVResultCellView : UIView
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
 @protocol UIViewControllerTransitionCoordinator;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK22TVResultViewController")
 @interface TVResultViewController : UIViewController
+- (IBAction)infoButtonPressed:(id _Nonnull)sender;
+- (IBAction)backButtonPressed:(id _Nonnull)sender;
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator> _Nonnull)coordinator;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidLoad;
@@ -1151,7 +1297,6 @@ SWIFT_CLASS("_TtC14TrustVisionSDK22TVResultViewController")
 @end
 
 @class UITableView;
-@class UITableViewCell;
 
 @interface TVResultViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView * _Nonnull)tableView SWIFT_WARN_UNUSED_RESULT;
@@ -1232,6 +1377,13 @@ SWIFT_CLASS("_TtC14TrustVisionSDK21TVSelfieConfiguration")
 @end
 
 
+SWIFT_CLASS("_TtC14TrustVisionSDK19TVSelfieTimeoutView")
+@interface TVSelfieTimeoutView : UIView
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 @class UIPresentationController;
 
 @interface TVViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UIAdaptivePresentationControllerDelegate>
@@ -1242,8 +1394,8 @@ SWIFT_CLASS("_TtC14TrustVisionSDK21TVSelfieConfiguration")
 
 SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 @interface TrustVisionSdk : NSObject
-+ (void)initializeWithBaseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
-+ (void)initializeWithAccessKeyId:(NSString * _Nonnull)accessKeyId accessKeySecret:(NSString * _Nonnull)accessKeySecret baseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
++ (void)initializeWithBaseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode xRequestId:(NSString * _Nullable)xRequestId isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
++ (void)initializeWithAccessKeyId:(NSString * _Nonnull)accessKeyId accessKeySecret:(NSString * _Nonnull)accessKeySecret baseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode xRequestId:(NSString * _Nullable)xRequestId isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
 + (UINavigationController * _Nonnull)newCameraViewControllerWithConfig:(TVSDKConfig * _Nonnull)config success:(void (^ _Nonnull)(TVDetectionResult * _Nonnull))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure cancellation:(void (^ _Nonnull)(void))cancellation SWIFT_WARN_UNUSED_RESULT;
 + (NSArray<TVCardType *> * _Nonnull)getCardTypes SWIFT_WARN_UNUSED_RESULT;
 + (NSArray<NSString *> * _Nonnull)getLivenessOptions SWIFT_WARN_UNUSED_RESULT;
@@ -1263,6 +1415,9 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 
 
 
+@interface UIButton (SWIFT_EXTENSION(TrustVisionSDK))
+@property (nonatomic, copy) IBInspectable NSString * _Nullable xibLocKey;
+@end
 
 
 
@@ -1275,6 +1430,11 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 
 
 
+
+
+@interface UILabel (SWIFT_EXTENSION(TrustVisionSDK))
+@property (nonatomic, copy) IBInspectable NSString * _Nullable xibLocKey;
+@end
 
 
 
@@ -1477,7 +1637,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import AVFoundation;
 @import CoreGraphics;
+@import CoreMedia;
 @import Foundation;
 @import ObjectiveC;
 @import TrustVisionAPI;
@@ -1515,12 +1677,6 @@ typedef SWIFT_ENUM(NSInteger, LivenessOption, closed) {
   LivenessOptionHybrid = 2,
 };
 
-
-SWIFT_CLASS("_TtC14TrustVisionSDK11SoundPlayer")
-@interface SoundPlayer : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
 @class NSCoder;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK16TVViewController")
@@ -1552,6 +1708,29 @@ SWIFT_CLASS("_TtC14TrustVisionSDK15TVCameraPreview")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) Class _Nonnull layerClass;)
 + (Class _Nonnull)layerClass SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK12TVCameraView")
+@interface TVCameraView : UIView
+- (void)awakeFromNib;
+- (void)layoutSubviews;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class AVCaptureOutput;
+@class AVCaptureConnection;
+
+@interface TVCameraView (SWIFT_EXTENSION(TrustVisionSDK)) <AVCaptureVideoDataOutputSampleBufferDelegate>
+- (void)captureOutput:(AVCaptureOutput * _Nonnull)output didOutputSampleBuffer:(CMSampleBufferRef _Nonnull)sampleBuffer fromConnection:(AVCaptureConnection * _Nonnull)connection;
+@end
+
+@class AVCaptureMetadataOutput;
+@class AVMetadataObject;
+
+@interface TVCameraView (SWIFT_EXTENSION(TrustVisionSDK)) <AVCaptureMetadataOutputObjectsDelegate>
+- (void)captureOutput:(AVCaptureMetadataOutput * _Nonnull)output didOutputMetadataObjects:(NSArray<AVMetadataObject *> * _Nonnull)metadataObjects fromConnection:(AVCaptureConnection * _Nonnull)connection;
 @end
 
 @class CardInfo;
@@ -1687,6 +1866,9 @@ typedef SWIFT_ENUM(NSInteger, TVErrorCategory, closed) {
 
 SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
 @interface TVIDDetectionViewController : TVBaseDetectionViewController
+- (IBAction)skipButtonPressed:(id _Nonnull)sender;
+- (IBAction)captureButtonPressed:(id _Nonnull)sender;
+- (IBAction)closeButtonPressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
@@ -1698,6 +1880,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
 @class UIImagePickerController;
 
 @interface TVIDDetectionViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+- (IBAction)galleryButtonPressed:(id _Nonnull)sender;
 - (void)imagePickerController:(UIImagePickerController * _Nonnull)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey, id> * _Nonnull)info;
 @end
 
@@ -1729,14 +1912,29 @@ typedef SWIFT_ENUM(NSInteger, TVCardSide, closed) {
 };
 
 
+SWIFT_CLASS("_TtC14TrustVisionSDK17TVIdCardFrameView")
+@interface TVIdCardFrameView : UIView
+- (void)awakeFromNib;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+
 /// Camera View Controller
 /// Features: capture image, detech faces…
 SWIFT_CLASS("_TtC14TrustVisionSDK33TVLivenessDetectionViewController")
 @interface TVLivenessDetectionViewController : TVBaseDetectionViewController
+- (IBAction)flipCameraButtonPressed:(id _Nonnull)sender;
+- (IBAction)capturePressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidDisappear:(BOOL)animated;
+/// Handle event user presses close button
+/// \param sender button
+///
+- (IBAction)pressCloseButton:(id _Nonnull)sender;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -1749,7 +1947,17 @@ SWIFT_CLASS("_TtC14TrustVisionSDK16TVLivenessResult")
 @interface TVLivenessResult : TVBasePollingResult
 @property (nonatomic) float score;
 @property (nonatomic) BOOL isLive;
+@property (nonatomic, copy) NSString * _Nonnull verdict;
 + (TVLivenessResult * _Nullable)fromApiObjectWithApiLivenessResponse:(TVVerifyLivenessResponse * _Nullable)apiLivenessResponse SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK18TVLivenessStepView")
+@interface TVLivenessStepView : UIView
+- (void)awakeFromNib;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
 @end
 
 
@@ -1763,6 +1971,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK18TVLocalizationFile")
 
 SWIFT_CLASS("_TtC14TrustVisionSDK25TVQRScannerViewController")
 @interface TVQRScannerViewController : TVBaseDetectionViewController
+- (IBAction)closeButtonPressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
@@ -1784,10 +1993,27 @@ SWIFT_CLASS("_TtC14TrustVisionSDK7TVQrSdk")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+SWIFT_CLASS("_TtC14TrustVisionSDK12TVResultCell")
+@interface TVResultCell : UITableViewCell
+- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString * _Nullable)reuseIdentifier OBJC_DESIGNATED_INITIALIZER SWIFT_AVAILABILITY(ios,introduced=3.0);
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK16TVResultCellView")
+@interface TVResultCellView : UIView
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
 @protocol UIViewControllerTransitionCoordinator;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK22TVResultViewController")
 @interface TVResultViewController : UIViewController
+- (IBAction)infoButtonPressed:(id _Nonnull)sender;
+- (IBAction)backButtonPressed:(id _Nonnull)sender;
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator> _Nonnull)coordinator;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidLoad;
@@ -1796,7 +2022,6 @@ SWIFT_CLASS("_TtC14TrustVisionSDK22TVResultViewController")
 @end
 
 @class UITableView;
-@class UITableViewCell;
 
 @interface TVResultViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView * _Nonnull)tableView SWIFT_WARN_UNUSED_RESULT;
@@ -1877,6 +2102,13 @@ SWIFT_CLASS("_TtC14TrustVisionSDK21TVSelfieConfiguration")
 @end
 
 
+SWIFT_CLASS("_TtC14TrustVisionSDK19TVSelfieTimeoutView")
+@interface TVSelfieTimeoutView : UIView
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 @class UIPresentationController;
 
 @interface TVViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UIAdaptivePresentationControllerDelegate>
@@ -1887,8 +2119,8 @@ SWIFT_CLASS("_TtC14TrustVisionSDK21TVSelfieConfiguration")
 
 SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 @interface TrustVisionSdk : NSObject
-+ (void)initializeWithBaseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
-+ (void)initializeWithAccessKeyId:(NSString * _Nonnull)accessKeyId accessKeySecret:(NSString * _Nonnull)accessKeySecret baseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
++ (void)initializeWithBaseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode xRequestId:(NSString * _Nullable)xRequestId isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
++ (void)initializeWithAccessKeyId:(NSString * _Nonnull)accessKeyId accessKeySecret:(NSString * _Nonnull)accessKeySecret baseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode xRequestId:(NSString * _Nullable)xRequestId isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
 + (UINavigationController * _Nonnull)newCameraViewControllerWithConfig:(TVSDKConfig * _Nonnull)config success:(void (^ _Nonnull)(TVDetectionResult * _Nonnull))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure cancellation:(void (^ _Nonnull)(void))cancellation SWIFT_WARN_UNUSED_RESULT;
 + (NSArray<TVCardType *> * _Nonnull)getCardTypes SWIFT_WARN_UNUSED_RESULT;
 + (NSArray<NSString *> * _Nonnull)getLivenessOptions SWIFT_WARN_UNUSED_RESULT;
@@ -1908,6 +2140,9 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 
 
 
+@interface UIButton (SWIFT_EXTENSION(TrustVisionSDK))
+@property (nonatomic, copy) IBInspectable NSString * _Nullable xibLocKey;
+@end
 
 
 
@@ -1920,6 +2155,11 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 
 
 
+
+
+@interface UILabel (SWIFT_EXTENSION(TrustVisionSDK))
+@property (nonatomic, copy) IBInspectable NSString * _Nullable xibLocKey;
+@end
 
 
 
@@ -2119,7 +2359,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import AVFoundation;
 @import CoreGraphics;
+@import CoreMedia;
 @import Foundation;
 @import ObjectiveC;
 @import TrustVisionAPI;
@@ -2157,12 +2399,6 @@ typedef SWIFT_ENUM(NSInteger, LivenessOption, closed) {
   LivenessOptionHybrid = 2,
 };
 
-
-SWIFT_CLASS("_TtC14TrustVisionSDK11SoundPlayer")
-@interface SoundPlayer : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
 @class NSCoder;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK16TVViewController")
@@ -2194,6 +2430,29 @@ SWIFT_CLASS("_TtC14TrustVisionSDK15TVCameraPreview")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) Class _Nonnull layerClass;)
 + (Class _Nonnull)layerClass SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK12TVCameraView")
+@interface TVCameraView : UIView
+- (void)awakeFromNib;
+- (void)layoutSubviews;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class AVCaptureOutput;
+@class AVCaptureConnection;
+
+@interface TVCameraView (SWIFT_EXTENSION(TrustVisionSDK)) <AVCaptureVideoDataOutputSampleBufferDelegate>
+- (void)captureOutput:(AVCaptureOutput * _Nonnull)output didOutputSampleBuffer:(CMSampleBufferRef _Nonnull)sampleBuffer fromConnection:(AVCaptureConnection * _Nonnull)connection;
+@end
+
+@class AVCaptureMetadataOutput;
+@class AVMetadataObject;
+
+@interface TVCameraView (SWIFT_EXTENSION(TrustVisionSDK)) <AVCaptureMetadataOutputObjectsDelegate>
+- (void)captureOutput:(AVCaptureMetadataOutput * _Nonnull)output didOutputMetadataObjects:(NSArray<AVMetadataObject *> * _Nonnull)metadataObjects fromConnection:(AVCaptureConnection * _Nonnull)connection;
 @end
 
 @class CardInfo;
@@ -2329,6 +2588,9 @@ typedef SWIFT_ENUM(NSInteger, TVErrorCategory, closed) {
 
 SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
 @interface TVIDDetectionViewController : TVBaseDetectionViewController
+- (IBAction)skipButtonPressed:(id _Nonnull)sender;
+- (IBAction)captureButtonPressed:(id _Nonnull)sender;
+- (IBAction)closeButtonPressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
@@ -2340,6 +2602,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK27TVIDDetectionViewController")
 @class UIImagePickerController;
 
 @interface TVIDDetectionViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+- (IBAction)galleryButtonPressed:(id _Nonnull)sender;
 - (void)imagePickerController:(UIImagePickerController * _Nonnull)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey, id> * _Nonnull)info;
 @end
 
@@ -2371,14 +2634,29 @@ typedef SWIFT_ENUM(NSInteger, TVCardSide, closed) {
 };
 
 
+SWIFT_CLASS("_TtC14TrustVisionSDK17TVIdCardFrameView")
+@interface TVIdCardFrameView : UIView
+- (void)awakeFromNib;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+
 /// Camera View Controller
 /// Features: capture image, detech faces…
 SWIFT_CLASS("_TtC14TrustVisionSDK33TVLivenessDetectionViewController")
 @interface TVLivenessDetectionViewController : TVBaseDetectionViewController
+- (IBAction)flipCameraButtonPressed:(id _Nonnull)sender;
+- (IBAction)capturePressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidDisappear:(BOOL)animated;
+/// Handle event user presses close button
+/// \param sender button
+///
+- (IBAction)pressCloseButton:(id _Nonnull)sender;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -2391,7 +2669,17 @@ SWIFT_CLASS("_TtC14TrustVisionSDK16TVLivenessResult")
 @interface TVLivenessResult : TVBasePollingResult
 @property (nonatomic) float score;
 @property (nonatomic) BOOL isLive;
+@property (nonatomic, copy) NSString * _Nonnull verdict;
 + (TVLivenessResult * _Nullable)fromApiObjectWithApiLivenessResponse:(TVVerifyLivenessResponse * _Nullable)apiLivenessResponse SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK18TVLivenessStepView")
+@interface TVLivenessStepView : UIView
+- (void)awakeFromNib;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
 @end
 
 
@@ -2405,6 +2693,7 @@ SWIFT_CLASS("_TtC14TrustVisionSDK18TVLocalizationFile")
 
 SWIFT_CLASS("_TtC14TrustVisionSDK25TVQRScannerViewController")
 @interface TVQRScannerViewController : TVBaseDetectionViewController
+- (IBAction)closeButtonPressed:(id _Nonnull)sender;
 - (void)viewDidLoad;
 - (void)viewDidLayoutSubviews;
 - (void)viewDidAppear:(BOOL)animated;
@@ -2426,10 +2715,27 @@ SWIFT_CLASS("_TtC14TrustVisionSDK7TVQrSdk")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+SWIFT_CLASS("_TtC14TrustVisionSDK12TVResultCell")
+@interface TVResultCell : UITableViewCell
+- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString * _Nullable)reuseIdentifier OBJC_DESIGNATED_INITIALIZER SWIFT_AVAILABILITY(ios,introduced=3.0);
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC14TrustVisionSDK16TVResultCellView")
+@interface TVResultCellView : UIView
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder * _Nonnull)aDecoder SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
 @protocol UIViewControllerTransitionCoordinator;
 
 SWIFT_CLASS("_TtC14TrustVisionSDK22TVResultViewController")
 @interface TVResultViewController : UIViewController
+- (IBAction)infoButtonPressed:(id _Nonnull)sender;
+- (IBAction)backButtonPressed:(id _Nonnull)sender;
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator> _Nonnull)coordinator;
 - (void)viewDidAppear:(BOOL)animated;
 - (void)viewDidLoad;
@@ -2438,7 +2744,6 @@ SWIFT_CLASS("_TtC14TrustVisionSDK22TVResultViewController")
 @end
 
 @class UITableView;
-@class UITableViewCell;
 
 @interface TVResultViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView * _Nonnull)tableView SWIFT_WARN_UNUSED_RESULT;
@@ -2519,6 +2824,13 @@ SWIFT_CLASS("_TtC14TrustVisionSDK21TVSelfieConfiguration")
 @end
 
 
+SWIFT_CLASS("_TtC14TrustVisionSDK19TVSelfieTimeoutView")
+@interface TVSelfieTimeoutView : UIView
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 @class UIPresentationController;
 
 @interface TVViewController (SWIFT_EXTENSION(TrustVisionSDK)) <UIAdaptivePresentationControllerDelegate>
@@ -2529,8 +2841,8 @@ SWIFT_CLASS("_TtC14TrustVisionSDK21TVSelfieConfiguration")
 
 SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 @interface TrustVisionSdk : NSObject
-+ (void)initializeWithBaseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
-+ (void)initializeWithAccessKeyId:(NSString * _Nonnull)accessKeyId accessKeySecret:(NSString * _Nonnull)accessKeySecret baseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
++ (void)initializeWithBaseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode xRequestId:(NSString * _Nullable)xRequestId isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
++ (void)initializeWithAccessKeyId:(NSString * _Nonnull)accessKeyId accessKeySecret:(NSString * _Nonnull)accessKeySecret baseUrl:(NSString * _Nullable)baseUrl localizationFiles:(NSArray<TVLocalizationFile *> * _Nullable)localizationFiles languageCode:(NSString * _Nullable)languageCode xRequestId:(NSString * _Nullable)xRequestId isForced:(BOOL)isForced success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure;
 + (UINavigationController * _Nonnull)newCameraViewControllerWithConfig:(TVSDKConfig * _Nonnull)config success:(void (^ _Nonnull)(TVDetectionResult * _Nonnull))success failure:(void (^ _Nonnull)(TVError * _Nonnull))failure cancellation:(void (^ _Nonnull)(void))cancellation SWIFT_WARN_UNUSED_RESULT;
 + (NSArray<TVCardType *> * _Nonnull)getCardTypes SWIFT_WARN_UNUSED_RESULT;
 + (NSArray<NSString *> * _Nonnull)getLivenessOptions SWIFT_WARN_UNUSED_RESULT;
@@ -2550,6 +2862,9 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 
 
 
+@interface UIButton (SWIFT_EXTENSION(TrustVisionSDK))
+@property (nonatomic, copy) IBInspectable NSString * _Nullable xibLocKey;
+@end
 
 
 
@@ -2562,6 +2877,11 @@ SWIFT_CLASS("_TtC14TrustVisionSDK14TrustVisionSdk")
 
 
 
+
+
+@interface UILabel (SWIFT_EXTENSION(TrustVisionSDK))
+@property (nonatomic, copy) IBInspectable NSString * _Nullable xibLocKey;
+@end
 
 
 
