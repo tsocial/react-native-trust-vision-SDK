@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "RNTrustVisionRnsdkFramework"
-  s.version      = "1.0.18-mafc"
+  s.version      = "1.0.19-mafc"
   s.summary      = "RNTrustVisionRnsdkFramework"
   s.description  = <<-DESC
                   RNTrustVisionRnsdkFramework
