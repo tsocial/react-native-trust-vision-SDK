@@ -115,6 +115,11 @@ class RNTrustVisionUtils {
             TVSDKConfiguration.TVCardSide cardSide = TVSDKConfiguration.TVCardSide.valueOf(cardSideString);
             configuration.setCardSide(cardSide);
         }
+
+        if (map.hasKey("isEnablePhotoGalleryPicker")) {
+            configuration.setEnablePhotoGalleryPicker(map.getBoolean("isEnablePhotoGalleryPicker"));
+        }
+
         return configuration.build();
     }
 

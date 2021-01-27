@@ -3,10 +3,10 @@
   <groupId>com.trustvision</groupId>
   <artifactId>tv_sdk</artifactId>
   <versioning>
-    <release>1.0.28-ui-only</release>
+    <release>1.0.30-ui-only</release>
     <versions>
-      <version>1.0.28-ui-only</version>
+      <version>1.0.30-ui-only</version>
     </versions>
-    <lastUpdated>20201117004651</lastUpdated>
+    <lastUpdated>20210127022018</lastUpdated>
   </versioning>
 </metadata>
